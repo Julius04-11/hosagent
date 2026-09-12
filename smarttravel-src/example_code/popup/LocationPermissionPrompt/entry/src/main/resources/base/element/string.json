@@ -1,0 +1,179 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "LocationPermission"
+    },
+    {
+      "name": "Location_Reason",
+      "value": "The app needs to obtain location information"
+    },
+    {
+      "name": "full_width",
+      "value": "100%"
+    },
+    {
+      "name": "full_height",
+      "value": "100%"
+    },{
+      "name": "home",
+      "value": "首页"
+    },
+    {
+      "name": "travel",
+      "value": "旅行"
+    },
+    {
+      "name": "strategy",
+      "value": "攻略"
+    },
+    {
+      "name": "personal",
+      "value": "个人中心"
+    },
+    {
+      "name": "search_placeholder",
+      "value": "请输入要搜索的内容"
+    },
+    {
+      "name": "four_hundred",
+      "value": "400"
+    },
+    {
+      "name": "title_level_1",
+      "value": "附近景点"
+    },
+    {
+      "name": "title_level_2",
+      "value": "让旅行更便捷"
+    },
+    {
+      "name": "title_level_3",
+      "value": "点击查看"
+    },
+    {
+      "name": "title_middle_1",
+      "value": "探索周边美景"
+    },
+    {
+      "name": "grid_1_level_1",
+      "value": "限时送"
+    },
+    {
+      "name": "grid_1_level_2",
+      "value": "优惠券"
+    },
+    {
+      "name": "grid_1_level_3",
+      "value": "让旅行更便捷"
+    },
+    {
+      "name": "grid_1_level_4",
+      "value": "查看合集"
+    },
+    {
+      "name": "grid_2_level_1",
+      "value": "去兑换"
+    },
+    {
+      "name": "grid_2_level_2",
+      "value": "发现附近"
+    },
+    {
+      "name": "grid_2_level_3",
+      "value": "限时领取兑换券"
+    },
+    {
+      "name": "grid_2_level_4",
+      "value": "查看合集"
+    },
+    {
+      "name": "popular",
+      "value": "热门景点"
+    },
+    {
+      "name": "check_more",
+      "value": "查看更多"
+    },
+    {
+      "name": "location_title",
+      "value": "深圳世界之窗"
+    },
+    {
+      "name": "location_title_desc1",
+      "value": "0.5km"
+    },
+    {
+      "name": "location_title_desc2",
+      "value": "南山区深南大道9037号"
+    },
+    {
+      "name": "location_title_desc3",
+      "value": "2分钟"
+    },
+    {
+      "name": "location_title_cost1",
+      "value": "¥180"
+    },
+    {
+      "name": "location_title_cost2",
+      "value": "¥200"
+    },
+    {
+      "name": "location_title_cost3",
+      "value": "满20减12"
+    },
+    {
+      "name": "discover",
+      "value": "发现"
+    },
+    {
+      "name": "navigation",
+      "value": "导航"
+    },
+    {
+      "name": "Attraction",
+      "value": "景点"
+    },
+    {
+      "name": "popup_text",
+      "value": "打开定位，马上获取附近吃喝玩乐"
+    },
+    {
+      "name": "pop_button_text",
+      "value": "去打开"
+    },
+    {
+      "name": "location_text",
+      "value": "深圳"
+    },
+    {
+      "name": "popup_width",
+      "value": "96%"
+    },
+    {
+      "name": "popup_text_width",
+      "value": "75%"
+    },
+    {
+      "name": "location_width",
+      "value": "60%"
+    },
+    {
+      "name": "agcit_huawei_touristPark_LocationPermissionPrompt",
+      "value": "1.0.0"
+    },
+    {
+      "name": "function_only_displayed",
+      "value": "功能仅展示"
+    }
+  ]
+}

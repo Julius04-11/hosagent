@@ -1,0 +1,393 @@
+[
+  {
+    "activityId": 1,
+    "title": "世界之窗国际文化节",
+    "subtitle": "一日游遍世界，感受多元文化魅力",
+    "price": "¥168",
+    "originalPrice": "¥220",
+    "rating": 4.8,
+    "reviewCount": 1256,
+    "category": "文化体验",
+    "tags": ["国际文化", "主题公园", "表演艺术", "美食"],
+    "carouselImages": [
+      "https://picsum.photos/id/2001/800/400",
+      "https://picsum.photos/id/2002/800/400",
+      "https://picsum.photos/id/2003/800/400"
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "🏛️ 景区介绍",
+        "content": "世界之窗位于深圳市南山区，是一个集世界奇观、历史遗迹、古今名胜、民间歌舞表演于一体的主题公园。这里汇聚了130个世界著名景观，让您一日游遍世界，感受不同文化的魅力。园区按世界地域结构和游览活动内容分为世界广场、亚洲区、大洋洲区、欧洲区、非洲区、美洲区、世界雕塑园、国际街八大景区。"
+      },
+      {
+        "type": "rich_text_list",
+        "title": "🌍 活动详情",
+        "items": [
+          { "label": "活动名称", "value": "世界之窗国际文化节" },
+          { "label": "活动时间", "value": "2025年10月10日 - 2025年10月12日 每日09:00-22:00" },
+          { "label": "活动地点", "value": "世界之窗主题公园全园" },
+          { "label": "适合人群", "value": "全年龄段，特别适合家庭亲子游" },
+          { "label": "活动亮点", "value": "国际文化表演、世界美食节、文化体验区、国际时装秀" },
+          {
+            "label": "活动内容",
+            "value": [
+              "**国际文化表演：** 来自世界各地的精彩文化表演，包括非洲鼓乐、印度舞蹈、巴西桑巴、俄罗斯芭蕾等，每天3场精彩演出。",
+              "**世界美食节：** 品尝各国特色美食，从法国鹅肝到日本寿司，从意大利披萨到泰国冬阴功，应有尽有，满足您的味蕾。",
+              "**文化体验区：** 学习各国传统手工艺，如日本折纸、印度彩绘、中国剪纸、法国绘画等，亲手制作纪念品。",
+              "**国际时装秀：** 展示各国传统服饰，感受不同文化的服饰魅力，还有互动试穿环节。",
+              "**世界音乐节：** 欣赏各国经典音乐，从古典到现代，从民族到流行，现场音乐表演让您陶醉其中。",
+              "**文化讲座：** 邀请各国文化专家，分享世界各地的历史文化知识，增长见识，开阔视野。",
+              "**互动游戏：** 参与各国传统游戏，体验不同文化的娱乐方式，赢取精美礼品。",
+              "**摄影比赛：** 国际文化主题摄影比赛，记录美好瞬间，赢取丰厚奖品。"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "schedule",
+        "title": "📅 活动日程",
+        "schedule": [
+          { "time": "09:00-10:30", "activity": "开幕式表演", "location": "世界广场" },
+          { "time": "10:30-12:00", "activity": "国际文化表演", "location": "各主题区域" },
+          { "time": "12:00-14:00", "activity": "世界美食节", "location": "国际街" },
+          { "time": "14:00-16:00", "activity": "文化体验区", "location": "各文化展区" },
+          { "time": "16:00-17:30", "activity": "国际时装秀", "location": "世界广场" },
+          { "time": "17:30-19:00", "activity": "世界音乐节", "location": "各表演舞台" },
+          { "time": "19:00-20:30", "activity": "文化讲座", "location": "文化中心" },
+          { "time": "20:30-22:00", "activity": "闭幕式表演", "location": "世界广场" }
+        ]
+      },
+      {
+        "type": "image_gallery",
+        "title": "📸 精彩瞬间",
+        "images": [
+          "https://picsum.photos/id/2010/400/300",
+          "https://picsum.photos/id/2011/400/300",
+          "https://picsum.photos/id/2012/400/300",
+          "https://picsum.photos/id/2013/400/300",
+          "https://picsum.photos/id/2014/400/300"
+        ]
+      },
+      {
+        "type": "contact_info",
+        "title": "📞 联系方式",
+        "phone": "0755-26608000",
+        "email": "info@szwindow.com",
+        "website": "http://www.szwindow.com"
+      }
+    ],
+    "enrollmentAvailable": true,
+    "enrollmentText": "立即购票",
+    "enrollmentLink": "https://example.com/tickets/ACT001"
+  },
+  {
+    "activityId": 2,
+    "title": "欢乐谷万圣节狂欢夜",
+    "subtitle": "惊险刺激的万圣节主题夜场体验",
+    "price": "¥128",
+    "originalPrice": "¥180",
+    "rating": 4.6,
+    "reviewCount": 892,
+    "category": "娱乐休闲",
+    "tags": ["万圣节", "主题乐园", "夜场", "刺激"],
+    "carouselImages": [
+      "https://picsum.photos/id/2020/800/400",
+      "https://picsum.photos/id/2021/800/400",
+      "https://picsum.photos/id/2022/800/400"
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "🎃 景区介绍",
+        "content": "深圳欢乐谷是华侨城集团新一代大型主题乐园，集参与性、观赏性、娱乐性、趣味性于一体。园区分为九大主题区，拥有100多个游乐项目，是深圳最受欢迎的主题乐园之一。在万圣节期间，整个园区将变身为恐怖主题乐园，为游客带来前所未有的惊险体验。"
+      },
+      {
+        "type": "rich_text_list",
+        "title": "👻 活动详情",
+        "items": [
+          { "label": "活动名称", "value": "欢乐谷万圣节狂欢夜" },
+          { "label": "活动时间", "value": "2025年10月15日 - 2025年10月31日 每日18:00-22:00" },
+          { "label": "活动地点", "value": "深圳欢乐谷全园" },
+          { "label": "适合人群", "value": "12岁以上，胆大者优先" },
+          { "label": "活动亮点", "value": "鬼屋探险、万圣节游行、变装大赛、恐怖表演" },
+          {
+            "label": "活动内容",
+            "value": [
+              "**万圣节主题装饰：** 全园布置万圣节主题装饰，营造恐怖氛围，包括南瓜灯、骷髅、蜘蛛网等元素。",
+              "**鬼屋探险：** 多个恐怖鬼屋，包括医院主题、学校主题、古堡主题等，挑战您的胆量极限。",
+              "**万圣节游行：** 精彩的万圣节主题游行表演，包括僵尸舞、女巫表演、吸血鬼秀等。",
+              "**变装大赛：** 参与万圣节变装大赛，展示您的创意装扮，赢取丰厚奖品。",
+              "**恐怖表演：** 专业演员带来精彩的恐怖主题表演，包括魔术、杂技、舞蹈等。",
+              "**万圣节美食：** 特色万圣节主题美食和饮品，包括血红色饮料、眼球蛋糕等。",
+              "**互动游戏：** 参与各种万圣节主题互动游戏，赢取精美礼品。",
+              "**摄影体验：** 在恐怖主题场景中拍摄独特的万圣节照片。"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "schedule",
+        "title": "📅 活动日程",
+        "schedule": [
+          { "time": "18:00-18:30", "activity": "入园仪式", "location": "主入口" },
+          { "time": "18:30-19:30", "activity": "鬼屋探险", "location": "各鬼屋区域" },
+          { "time": "19:30-20:00", "activity": "万圣节游行", "location": "主街道" },
+          { "time": "20:00-20:30", "activity": "变装大赛", "location": "中央广场" },
+          { "time": "20:30-21:00", "activity": "恐怖表演", "location": "表演舞台" },
+          { "time": "21:00-21:30", "activity": "互动游戏", "location": "各游戏区域" },
+          { "time": "21:30-22:00", "activity": "闭幕仪式", "location": "中央广场" }
+        ]
+      },
+      {
+        "type": "image_gallery",
+        "title": "📸 精彩瞬间",
+        "images": [
+          "https://picsum.photos/id/2030/400/300",
+          "https://picsum.photos/id/2031/400/300",
+          "https://picsum.photos/id/2032/400/300",
+          "https://picsum.photos/id/2033/400/300",
+          "https://picsum.photos/id/2034/400/300"
+        ]
+      },
+      {
+        "type": "contact_info",
+        "title": "📞 联系方式",
+        "phone": "0755-26949168",
+        "email": "info@happyvalley.com",
+        "website": "http://www.happyvalley.com"
+      }
+    ],
+    "enrollmentAvailable": true,
+    "enrollmentText": "立即购票",
+    "enrollmentLink": "https://example.com/tickets/ACT002"
+  },
+  {
+    "activityId": 3,
+    "title": "东部华侨城生态徒步",
+    "carouselImages": [
+      "https://picsum.photos/id/2040/800/400",
+      "https://picsum.photos/id/2041/800/400",
+      "https://picsum.photos/id/2042/800/400"
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "🌲 景区介绍",
+        "content": "东部华侨城位于深圳市盐田区，是一个集生态旅游、娱乐休闲、科普教育于一体的综合性旅游区。这里山清水秀，空气清新，是深圳市民休闲度假的好去处。"
+      },
+      {
+        "type": "rich_text_list",
+        "title": "🥾 活动详情",
+        "items": [
+          { "label": "活动名称", "value": "东部华侨城生态徒步" },
+          { "label": "活动时间", "value": "2025年10月18日 08:00-16:00" },
+          { "label": "活动地点", "value": "东部华侨城生态景区" },
+          {
+            "label": "活动内容",
+            "value": [
+              "**生态徒步路线：** 专业设计的徒步路线，欣赏自然风光。",
+              "**植物科普：** 专业导游介绍各种植物知识。",
+              "**观鸟活动：** 在专业指导下观察各种鸟类。",
+              "**环保教育：** 学习环保知识，参与环保行动。",
+              "**野餐体验：** 在自然环境中享受野餐乐趣。",
+              "**摄影指导：** 专业摄影师指导拍摄自然风光。"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image_gallery",
+        "title": "📸 精彩瞬间",
+        "images": [
+          "https://picsum.photos/id/2050/400/300",
+          "https://picsum.photos/id/2051/400/300",
+          "https://picsum.photos/id/2052/400/300",
+          "https://picsum.photos/id/2053/400/300",
+          "https://picsum.photos/id/2054/400/300"
+        ]
+      },
+      {
+        "type": "contact_info",
+        "title": "📞 联系方式",
+        "phone": "0755-88889888",
+        "email": "info@oct.com",
+        "website": "http://www.oct.com"
+      }
+    ],
+    "enrollmentAvailable": true,
+    "enrollmentText": "立即报名",
+    "enrollmentLink": "https://example.com/enroll/ACT003"
+  },
+  {
+    "activityId": 4,
+    "title": "大梅沙海滨音乐节",
+    "carouselImages": [
+      "https://picsum.photos/id/2060/800/400",
+      "https://picsum.photos/id/2061/800/400",
+      "https://picsum.photos/id/2062/800/400"
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "🏖️ 景区介绍",
+        "content": "大梅沙海滨公园是深圳最著名的海滨公园，拥有美丽的沙滩和清澈的海水。这里是深圳市民和游客休闲度假的热门选择，也是举办各种海滨活动的理想场所。"
+      },
+      {
+        "type": "rich_text_list",
+        "title": "🎵 活动详情",
+        "items": [
+          { "label": "活动名称", "value": "大梅沙海滨音乐节" },
+          { "label": "活动时间", "value": "2025年10月22日 16:00-22:00" },
+          { "label": "活动地点", "value": "大梅沙海滨公园沙滩" },
+          {
+            "label": "活动内容",
+            "value": [
+              "**现场音乐表演：** 知名乐队和歌手现场演出。",
+              "**沙滩派对：** 在沙滩上享受音乐和舞蹈。",
+              "**美食市集：** 各种美食摊位，品尝特色小吃。",
+              "**互动游戏：** 沙滩排球、飞盘等互动游戏。",
+              "**摄影比赛：** 海滨主题摄影比赛。",
+              "**烟花表演：** 精彩的烟花表演结束音乐节。"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image_gallery",
+        "title": "📸 精彩瞬间",
+        "images": [
+          "https://picsum.photos/id/2070/400/300",
+          "https://picsum.photos/id/2071/400/300",
+          "https://picsum.photos/id/2072/400/300",
+          "https://picsum.photos/id/2073/400/300",
+          "https://picsum.photos/id/2074/400/300"
+        ]
+      },
+      {
+        "type": "contact_info",
+        "title": "📞 联系方式",
+        "phone": "0755-25062406",
+        "email": "info@dameisha.com",
+        "website": "http://www.dameisha.com"
+      }
+    ],
+    "enrollmentAvailable": true,
+    "enrollmentText": "立即购票",
+    "enrollmentLink": "https://example.com/tickets/ACT004"
+  },
+  {
+    "activityId": 5,
+    "title": "莲花山公园风筝节",
+    "carouselImages": [
+      "https://picsum.photos/id/2080/800/400",
+      "https://picsum.photos/id/2081/800/400",
+      "https://picsum.photos/id/2082/800/400"
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "🪁 景区介绍",
+        "content": "莲花山公园位于深圳市中心区，是深圳的标志性公园之一。公园内有邓小平铜像，是深圳市民休闲娱乐的重要场所。这里视野开阔，是放风筝的理想地点。"
+      },
+      {
+        "type": "rich_text_list",
+        "title": "🎪 活动详情",
+        "items": [
+          { "label": "活动名称", "value": "莲花山公园风筝节" },
+          { "label": "活动时间", "value": "2025年10月28日 09:00-17:00" },
+          { "label": "活动地点", "value": "莲花山公园广场" },
+          {
+            "label": "活动内容",
+            "value": [
+              "**风筝制作：** 学习制作各种传统风筝。",
+              "**风筝比赛：** 风筝飞行高度和技巧比赛。",
+              "**风筝展览：** 展示各种精美的风筝作品。",
+              "**亲子活动：** 适合全家参与的风筝活动。",
+              "**风筝表演：** 专业风筝表演团队精彩演出。",
+              "**风筝义卖：** 义卖活动，所得款项用于公益事业。"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image_gallery",
+        "title": "📸 精彩瞬间",
+        "images": [
+          "https://picsum.photos/id/2090/400/300",
+          "https://picsum.photos/id/2091/400/300",
+          "https://picsum.photos/id/2092/400/300",
+          "https://picsum.photos/id/2093/400/300",
+          "https://picsum.photos/id/2094/400/300"
+        ]
+      },
+      {
+        "type": "contact_info",
+        "title": "📞 联系方式",
+        "phone": "0755-83065000",
+        "email": "info@lianhuashan.com",
+        "website": "http://www.lianhuashan.com"
+      }
+    ],
+    "enrollmentAvailable": false,
+    "enrollmentText": "免费参与",
+    "enrollmentLink": ""
+  },
+  {
+    "activityId": 6,
+    "title": "深圳湾公园观鸟节",
+    "carouselImages": [
+      "https://picsum.photos/id/2100/800/400",
+      "https://picsum.photos/id/2101/800/400",
+      "https://picsum.photos/id/2102/800/400"
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "🦅 景区介绍",
+        "content": "深圳湾公园是深圳市最大的海滨公园，拥有15公里的海岸线。这里生态环境优美，是候鸟迁徙的重要栖息地，也是观鸟爱好者的天堂。"
+      },
+      {
+        "type": "rich_text_list",
+        "title": "🔍 活动详情",
+        "items": [
+          { "label": "活动名称", "value": "深圳湾公园观鸟节" },
+          { "label": "活动时间", "value": "2025年10月5日 06:00-18:00" },
+          { "label": "活动地点", "value": "深圳湾公园观鸟台" },
+          {
+            "label": "活动内容",
+            "value": [
+              "**专业观鸟指导：** 鸟类专家现场指导观鸟技巧。",
+              "**鸟类摄影：** 学习拍摄鸟类的技巧和方法。",
+              "**鸟类知识讲座：** 了解各种鸟类的习性和特点。",
+              "**观鸟比赛：** 识别鸟类种类和数量的比赛。",
+              "**生态保护教育：** 学习湿地生态保护知识。",
+              "**观鸟装备展示：** 展示各种观鸟装备和工具。"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image_gallery",
+        "title": "📸 精彩瞬间",
+        "images": [
+          "https://picsum.photos/id/2110/400/300",
+          "https://picsum.photos/id/2111/400/300",
+          "https://picsum.photos/id/2112/400/300",
+          "https://picsum.photos/id/2113/400/300",
+          "https://picsum.photos/id/2114/400/300"
+        ]
+      },
+      {
+        "type": "contact_info",
+        "title": "📞 联系方式",
+        "phone": "0755-26612345",
+        "email": "info@szbay.com",
+        "website": "http://www.szbay.com"
+      }
+    ],
+    "enrollmentAvailable": false,
+    "enrollmentText": "免费参与",
+    "enrollmentLink": ""
+  }
+]

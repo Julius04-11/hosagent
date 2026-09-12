@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>活动页面</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 16px;
+    }
+
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tab {
+      flex-shrink: 0;
+      padding: 14px 20px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 500;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      color: #007bff;
+      border-bottom: 2px solid #007bff;
+    }
+
+    .content {
+      padding: 16px 0;
+    }
+
+    .card-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .card {
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 70vw;
+      max-width: 300px;
+    }
+
+    .card h4 {
+      margin: 0 0 8px;
+      font-size: 1.1em;
+    }
+
+    .card p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    /* 大屏适配 */
+    @media (min-width: 768px) {
+      .card-container {
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        justify-content: flex-start;
+      }
+
+      .card {
+        width: calc(33.333% - 12px);
+      }
+
+      .tab {
+        font-size: 1.1em;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .card {
+        width: calc(25% - 12px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="tabs" id="tabList">
+    <div class="tab active" data-category="hot">热门</div>
+    <div class="tab" data-category="new">最新</div>
+    <div class="tab" data-category="explore">探索</div>
+    <div class="tab" data-category="more">更多</div>
+  </div>
+
+  <div class="content">
+    <div class="card-container" id="cardContainer">
+      <!-- 卡片将由 JS 动态渲染 -->
+    </div>
+  </div>
+</div>
+
+<script>
+  const mockData = {
+    hot: [
+      { title: '沙滩音乐节', desc: '阳光、音乐、海浪一起嗨' },
+      { title: '民俗表演秀', desc: '感受地方特色文化魅力' },
+      { title: '夜间游园', desc: '灯火璀璨，夜景迷人' }
+    ],
+    new: [
+      { title: '户外电影节', desc: '草地放映，星空之下' },
+      { title: '自然手工课', desc: '亲子互动，共同创作' },
+      { title: '城市猎人', desc: 'AR 寻宝游戏活动' }
+    ],
+    explore: [
+      { title: '高空热气球', desc: '俯瞰整片美丽山河' },
+      { title: '峡谷穿越', desc: '徒步挑战极限自我' },
+      { title: '星空露营', desc: '帐篷下的银河' }
+    ],
+    more: [
+      { title: '生态讲堂', desc: '了解自然，保护家园' },
+      { title: '摄影采风', desc: '留住每一帧美景' },
+      { title: '骑行线路体验', desc: '景区骑行更自由' }
+    ]
+  };
+
+  const tabs = document.querySelectorAll('.tab');
+  const cardContainer = document.getElementById('cardContainer');
+
+  function renderCards(category) {
+    cardContainer.innerHTML = '';
+    const items = mockData[category] || [];
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <h4>${item.title}</h4>
+        <p>${item.desc}</p>
+      `;
+      cardContainer.appendChild(card);
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      renderCards(tab.dataset.category);
+    });
+  });
+
+  // 初始渲染
+  renderCards('hot');
+</script>
+
+</body>
+</html>

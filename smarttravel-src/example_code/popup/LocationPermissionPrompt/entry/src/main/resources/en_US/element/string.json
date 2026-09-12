@@ -1,0 +1,151 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "LocationPermission"
+    },{
+      "name": "home",
+      "value": "home"
+    },
+    {
+      "name": "travel",
+      "value": "travel"
+    },
+    {
+      "name": "strategy",
+      "value": "strategy"
+    },
+    {
+      "name": "personal",
+      "value": "personal"
+    },
+    {
+      "name": "search_placeholder",
+      "value": "please input search words"
+    },
+    {
+      "name": "title_level_1",
+      "value": "Nearby attractions"
+    },
+    {
+      "name": "title_level_2",
+      "value": "Make travel more convenient"
+    },
+    {
+      "name": "title_level_3",
+      "value": "Click to view"
+    },
+    {
+      "name": "title_middle_1",
+      "value": "Explore the surrounding beauty"
+    },
+    {
+      "name": "grid_1_level_1",
+      "value": "Limited time offer"
+    },
+    {
+      "name": "grid_1_level_2",
+      "value": "Vouchers"
+    },
+    {
+      "name": "grid_1_level_3",
+      "value": "Make travel more convenient"
+    },
+    {
+      "name": "grid_1_level_4",
+      "value": "View Collection"
+    },
+    {
+      "name": "grid_2_level_1",
+      "value": "exchange"
+    },
+    {
+      "name": "grid_2_level_2",
+      "value": "Find nearby"
+    },
+    {
+      "name": "grid_2_level_3",
+      "value": "Limited time offer to redeem coupons"
+    },
+    {
+      "name": "grid_2_level_4",
+      "value": "View Collection"
+    },
+    {
+      "name": "popular",
+      "value": "Popular attractions"
+    },
+    {
+      "name": "check_more",
+      "value": "View more"
+    },
+    {
+      "name": "location_title",
+      "value": "Shenzhen Window of the World"
+    },
+    {
+      "name": "location_title_desc1",
+      "value": "0.5km"
+    },
+    {
+      "name": "location_title_desc2",
+      "value": "No. 9037, Shennan Avenue, Nanshan District"
+    },
+    {
+      "name": "location_title_desc3",
+      "value": "2 minutes"
+    },
+    {
+      "name": "location_title_cost1",
+      "value": "¥180"
+    },
+    {
+      "name": "location_title_cost2",
+      "value": "¥200"
+    },
+    {
+      "name": "location_title_cost3",
+      "value": "20 off 12"
+    },
+    {
+      "name": "discover",
+      "value": "discovery"
+    },
+    {
+      "name": "navigation",
+      "value": "navigation"
+    },
+    {
+      "name": "Attraction",
+      "value": "Attraction"
+    },
+    {
+      "name": "popup_text",
+      "value": "Turn on location, and get nearby food, drink, and entertainment."
+    },
+    {
+      "name": "pop_button_text",
+      "value": "Go open"
+    },
+    {
+      "name": "location_text",
+      "value": "ShenZhen"
+    },
+    {
+      "name": "Location_Reason",
+      "value": "The app needs to obtain location information"
+    },
+    {
+      "name": "function_only_displayed",
+      "value": "Function only displayed "
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "routerMap": [
+    {
+      "name": "AppSettingPage",
+      "pageSourceFile": "src/main/ets/components/AppSettingPage.ets",
+      "buildFunction": "AppSettingPageBuilder",
+      "data": {
+        "description": "this is AppSettingPageBuilder"
+      }
+    },
+    {
+      "name": "AboutApp",
+      "pageSourceFile": "src/main/ets/components/AboutApp.ets",
+      "buildFunction": "AboutAppBuilder",
+      "data": {
+        "description": "this is AboutAppBuilder"
+      }
+    },
+    {
+      "name": "MessagePage",
+      "pageSourceFile": "src/main/ets/components/MessagePage.ets",
+      "buildFunction": "MessagePageBuilder",
+      "data": {
+        "description": "this is MessagePageBuilder"
+      }
+    },
+    {
+      "name": "PersonalCenter",
+      "pageSourceFile": "src/main/ets/components/PersonalCenter.ets",
+      "buildFunction": "PersonalCenterBuilder",
+      "data": {
+        "description": "this is PersonalCenterBuilder"
+      }
+    }
+  ]
+}

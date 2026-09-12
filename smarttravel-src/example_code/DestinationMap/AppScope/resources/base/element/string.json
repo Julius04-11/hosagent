@@ -1,0 +1,17 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "DestinationMap"
+    },
+    {
+      "name": "agcit_huawei_touristPark_DestinationMap",
+      "value": "1.0.0"
+    },
+
+    {
+      "name": "agcittype_huawei_touristPark_DestinationMap",
+      "value": "sceneTemplate"
+    }
+  ]
+}

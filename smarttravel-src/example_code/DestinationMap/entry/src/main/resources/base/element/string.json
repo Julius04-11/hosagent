@@ -1,0 +1,60 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "tabbar_icon_Collection",
+      "value": "Collection"
+    },
+    {
+      "name": "tabbar_button_Contacts",
+      "value": "Contacts"
+    },
+    {
+      "name": "address_name",
+      "value": "name"
+    },
+    {
+      "name": "commuting_text_placeholder",
+      "value": "placeholder"
+    },
+    {
+      "name": "commuting_text_add",
+      "value": "add"
+    },
+    {
+      "name": "rental_title",
+      "value": "rentalTitle"
+    },
+    {
+      "name": "rental_detail_subtitle1",
+      "value": "subtitle1"
+    },
+    {
+      "name": "rental_detail_content1",
+      "value": "content1"
+    },
+    {
+      "name": "rental_detail_subtitle2",
+      "value": "subtitle2"
+    },
+    {
+      "name": "rental_detail_content2",
+      "value": "content2"
+    },
+    {
+      "name": "nearby_list_title",
+      "value": "listTitle"
+    }
+  ]
+}

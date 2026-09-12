@@ -1,0 +1,80 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "name",
+      "value": "姓名："
+    },
+    {
+      "name": "input_name",
+      "value": "请输入姓名"
+    },
+    {
+      "name": "phone_no",
+      "value": "手机号："
+    },
+    {
+      "name": "input_phone_no",
+      "value": "请输入手机号"
+    },
+    {
+      "name": "card_type",
+      "value": "证件类型:"
+    },
+    {
+      "name": "id_card",
+      "value": "身份证"
+    },
+    {
+      "name": "card_no",
+      "value": "证件号码:"
+    },
+    {
+      "name": "input_card_no",
+      "value": "请输入证件号码"
+    },
+    {
+      "name": "confirm",
+      "value": "确认"
+    },
+    {
+      "name": "input_phone_no_error",
+      "value": "输入手机号有误， 请重新输入"
+    },
+    {
+      "name": "input_id_card_no_error_error",
+      "value": "姓名或证件号有误，请重新输入"
+    },
+    {
+      "name": "success",
+      "value": "新增成功"
+    },
+    {
+      "name": "tips",
+      "value": "项目若有实名制购票或实名制入场要求，以详情页为准。特别提示：实名制入场项目要求本人持购票时填写的有效证件入场。"
+    },
+    {
+      "name": "i_agree",
+      "value": "我已阅读并同意《实名须知》"
+    },
+    {
+      "name": "add_new",
+      "value": "新增实名观演人"
+    },
+    {
+      "name": "check_real_name_notice",
+      "value": "请勾选实名须知"
+    }
+  ]
+}

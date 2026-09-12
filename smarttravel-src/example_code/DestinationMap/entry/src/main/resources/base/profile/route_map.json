@@ -1,0 +1,12 @@
+{
+  "routerMap": [
+    {
+      "name": "mapPage",
+      "pageSourceFile": "src/main/ets/pages/MapPage.ets",
+      "buildFunction": "MapPageBuilder",
+      "data": {
+        "description": "地址页"
+      }
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+[
+  {
+    "id": "hotel_001",
+    "name": "深圳湾万豪酒店",
+    "category": "luxury",
+    "rating": 4.9,
+    "reviewCount": 1245,
+    "priceRange": "¥800-2000",
+    "address": "南山区科苑路15号",
+    "location": {
+      "lat": 22.5086,
+      "lng": 113.9344
+    },
+    "description": "五星级豪华酒店，毗邻深圳湾公园，拥有壮丽海景",
+    "facilities": ["游泳池", "健身房", "SPA", "会议室", "餐厅", "酒吧", "停车场", "WiFi"],
+    "roomTypes": [
+      {
+        "type": "deluxe",
+        "name": "豪华客房",
+        "price": 800,
+        "size": 45
+      },
+      {
+        "type": "suite",
+        "name": "海景套房",
+        "price": 1500,
+        "size": 80
+      }
+    ],
+    "images": ["luxury_hotel_01.jpg", "luxury_hotel_02.jpg"],
+    "phone": "0755-88889999",
+    "checkIn": "14:00",
+    "checkOut": "12:00",
+    "createdAt": 1700000000000
+  },
+  {
+    "id": "hotel_002",
+    "name": "华侨城洲际酒店",
+    "category": "luxury",
+    "rating": 4.8,
+    "reviewCount": 986,
+    "priceRange": "¥700-1800",
+    "address": "南山区华侨城",
+    "location": {
+      "lat": 22.5321,
+      "lng": 113.9876
+    },
+    "description": "国际连锁五星酒店，紧邻欢乐谷和世界之窗",
+    "facilities": ["游泳池", "健身房", "儿童乐园", "餐厅", "停车场", "WiFi"],
+    "roomTypes": [
+      {
+        "type": "standard",
+        "name": "标准客房",
+        "price": 700,
+        "size": 40
+      }
+    ],
+    "images": ["luxury_hotel_03.jpg"],
+    "phone": "0755-86668888",
+    "checkIn": "15:00",
+    "checkOut": "12:00",
+    "createdAt": 1700100000000
+  },
+  {
+    "id": "hotel_003",
+    "name": "福田香格里拉酒店",
+    "category": "luxury",
+    "rating": 4.9,
+    "reviewCount": 1532,
+    "priceRange": "¥900-2500",
+    "address": "福田区益田路4088号",
+    "location": {
+      "lat": 22.5432,
+      "lng": 114.0547
+    },
+    "description": "市中心地标性豪华酒店，交通便利",
+    "facilities": ["游泳池", "健身房", "SPA", "商务中心", "多功能厅", "WiFi"],
+    "roomTypes": [
+      {
+        "type": "executive",
+        "name": "行政客房",
+        "price": 1200,
+        "size": 50
+      }
+    ],
+    "images": ["luxury_hotel_04.jpg"],
+    "phone": "0755-82828888",
+    "checkIn": "14:00",
+    "checkOut": "12:00",
+    "createdAt": 1700200000000
+  },
+  {
+    "id": "hotel_004",
+    "name": "精品设计酒店",
+    "category": "boutique",
+    "rating": 4.6,
+    "reviewCount": 654,
+    "priceRange": "¥400-800",
+    "address": "南山区海德三道",
+    "location": {
+      "lat": 22.5234,
+      "lng": 113.9456
+    },
+    "description": "现代艺术设计风格，独特个性体验",
+    "facilities": ["咖啡厅", "艺术展廊", "WiFi", "停车场"],
+    "roomTypes": [
+      {
+        "type": "art",
+        "name": "艺术主题房",
+        "price": 500,
+        "size": 35
+      }
+    ],
+    "images": ["boutique_hotel_01.jpg"],
+    "phone": "0755-26665555",
+    "checkIn": "14:00",
+    "checkOut": "12:00",
+    "createdAt": 1700300000000
+  },
+  {
+    "id": "hotel_005",
+    "name": "商务快捷酒店",
+    "category": "business",
+    "rating": 4.3,
+    "reviewCount": 432,
+    "priceRange": "¥200-400",
+    "address": "福田区华强北路",
+    "location": {
+      "lat": 22.5456,
+      "lng": 114.0876
+    },
+    "description": "经济实惠，地理位置优越",
+    "facilities": ["WiFi", "停车场", "自助早餐"],
+    "roomTypes": [
+      {
+        "type": "standard",
+        "name": "标准间",
+        "price": 250,
+        "size": 25
+      }
+    ],
+    "images": ["business_hotel_01.jpg"],
+    "phone": "0755-83334444",
+    "checkIn": "12:00",
+    "checkOut": "12:00",
+    "createdAt": 1700400000000
+  },
+  {
+    "id": "hotel_006",
+    "name": "海滨度假酒店",
+    "category": "resort",
+    "rating": 4.7,
+    "reviewCount": 876,
+    "priceRange": "¥600-1500",
+    "address": "盐田区大梅沙",
+    "location": {
+      "lat": 22.5987,
+      "lng": 114.3234
+    },
+    "description": "海滨度假胜地，私人沙滩，适合家庭度假",
+    "facilities": ["私人沙滩", "游泳池", "水上运动", "儿童乐园", "餐厅", "WiFi"],
+    "roomTypes": [
+      {
+        "type": "seaview",
+        "name": "海景房",
+        "price": 800,
+        "size": 45
+      }
+    ],
+    "images": ["resort_hotel_01.jpg"],
+    "phone": "0755-25557777",
+    "checkIn": "15:00",
+    "checkOut": "11:00",
+    "createdAt": 1700500000000
+  }
+]

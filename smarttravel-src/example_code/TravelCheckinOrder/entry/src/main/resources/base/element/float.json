@@ -1,0 +1,92 @@
+{
+  "float": [
+    {
+      "name": "page_text_font_size",
+      "value": "50fp"
+    }
+    ,{
+      "name": "normal_card_padding",
+      "value": "16vp"
+    },
+    {
+      "name": "normal_card_vertical_padding",
+      "value": "12vp"
+    },
+    {
+      "name": "normal_oper_icon_len",
+      "value": "40vp"
+    },
+    {
+      "name": "normal_card_border_radius",
+      "value": "16vp"
+    },
+    {
+      "name": "normal_8_margin",
+      "value": "8vp"
+    },
+    {
+      "name": "title_font_size",
+      "value": "20vp"
+    },
+    {
+      "name": "normal_font_size",
+      "value": "14vp"
+    },
+    {
+      "name": "small_font_size",
+      "value": "12vp"
+    },
+    {
+      "name": "smaller_font_size",
+      "value": "10vp"
+    },
+    {
+      "name": "order_tab_font_line_height",
+      "value": "22vp"
+    },
+    {
+      "name": "order_tab_bar_height",
+      "value": "40vp"
+    },
+    {
+      "name": "order_tab_underline_width",
+      "value": "56vp"
+    },
+    {
+      "name": "order_tab_underline_height",
+      "value": "2vp"
+    },
+    {
+      "name": "order_tabs_top_margin",
+      "value": "50vp"
+    },
+    {
+      "name": "order_hotel_image_len",
+      "value": "24vp"
+    },
+    {
+      "name": "order_oper_buttons_width",
+      "value": "24vp"
+    },
+    {
+      "name": "order_room_image_width",
+      "value": "110vp"
+    },
+    {
+      "name": "order_room_image_height",
+      "value": "80vp"
+    },
+    {
+      "name": "order_room_image_border_radius",
+      "value": "8vp"
+    },
+    {
+      "name": "order_room_image_right_margin",
+      "value": "12vp"
+    },
+    {
+      "name": "no_order_tip_icon_len",
+      "value": "100vp"
+    }
+  ]
+}

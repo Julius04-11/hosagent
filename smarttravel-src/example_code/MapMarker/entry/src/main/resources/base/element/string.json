@@ -1,0 +1,96 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "MapMarker"
+    },
+    {
+      "name": "permission_location_approximately_reason",
+      "value": "申请模糊地理位置权限"
+    },
+    {
+      "name": "permission_location_reason",
+      "value": "申请精确地理位置权限"
+    },
+    {
+      "name": "shop1",
+      "value": "山下寿司"
+    },
+    {
+      "name": "shop2",
+      "value": "元师傅汉堡"
+    },
+    {
+      "name": "shop3",
+      "value": "周家酸菜鱼"
+    },
+    {
+      "name": "type1",
+      "value": "日料美食好评榜单第1名"
+    },
+    {
+      "name": "type2",
+      "value": "快餐美食好评榜单第1名"
+    },
+    {
+      "name": "type3",
+      "value": "酸菜鱼美食好评榜单第1名"
+    },
+    {
+      "name": "person",
+      "value": "/人"
+    },
+    {
+      "name": "score",
+      "value": "分"
+    },
+    {
+      "name": "rmb",
+      "value": "￥"
+    },
+    {
+      "name": "unit",
+      "value": "条"
+    },
+    {
+      "name": "comment",
+      "value": "评价:"
+    },
+    {
+      "name": "rest",
+      "value": "休息中"
+    },
+    {
+      "name": "week",
+      "value": "周一至周日"
+    },
+    {
+      "name": "time",
+      "value": "11:00-21:30"
+    },
+    {
+      "name": "heart",
+      "value": "收藏"
+    },
+    {
+      "name": "line",
+      "value": "路线"
+    },
+    {
+      "name": "around",
+      "value": "周边"
+    },
+    {
+      "name": "food_map",
+      "value": "美食地图"
+    }
+  ]
+}

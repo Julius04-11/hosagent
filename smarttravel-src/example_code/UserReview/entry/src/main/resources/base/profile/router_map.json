@@ -1,0 +1,12 @@
+{
+  "routerMap": [
+    {
+      "name": "UserReviewPage",
+      "pageSourceFile": "src/main/ets/pages/UserReviewPage.ets",
+      "buildFunction": "UserReviewPageBuilder",
+      "data": {
+        "description": "this is UserReviewPage"
+      }
+    }
+  ]
+}

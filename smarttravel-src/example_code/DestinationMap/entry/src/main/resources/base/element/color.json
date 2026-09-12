@@ -1,0 +1,24 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "default_background",
+      "value": "#F0F2F5"
+    },
+    {
+      "name": "label_background",
+      "value": "#1A0A59F7"
+    },
+    {
+      "name": "list_background_select",
+      "value": "#0D000000"
+    },
+    {
+      "name": "arrow_background",
+      "value": "#D6DDE0"
+    }
+  ]
+}

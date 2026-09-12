@@ -1,0 +1,20 @@
+{
+  "routerMap": [
+    {
+      "name": "CardPage",
+      "pageSourceFile": "src/main/ets/components/CardPage.ets",
+      "buildFunction": "CardPageBuilder",
+      "data": {
+        "description": "this is CardPageBuilder"
+      }
+    },
+    {
+      "name": "TravelTips",
+      "pageSourceFile": "src/main/ets/components/TravelTips.ets",
+      "buildFunction": "TravelTipsBuilder",
+      "data": {
+        "description": "this is TravelTipsBuilder"
+      }
+    }
+  ]
+}

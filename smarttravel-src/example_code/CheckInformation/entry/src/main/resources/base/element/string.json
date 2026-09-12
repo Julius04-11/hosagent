@@ -1,0 +1,80 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "name",
+      "value": "name"
+    },
+    {
+      "name": "input_name",
+      "value": "Please input name"
+    },
+    {
+      "name": "phone_no",
+      "value": "Phone number"
+    },
+    {
+      "name": "input_phone_no",
+      "value": "Please input phone number"
+    },
+    {
+      "name": "card_type",
+      "value": "card type"
+    },
+    {
+      "name": "id_card",
+      "value": "id card"
+    },
+    {
+      "name": "card_no",
+      "value": "card number"
+    },
+    {
+      "name": "input_card_no",
+      "value": "Please input card number"
+    },
+    {
+      "name": "confirm",
+      "value": "confirm"
+    },
+    {
+      "name": "input_phone_no_error",
+      "value": "Input phone number error"
+    },
+    {
+      "name": "input_id_card_no_error_error",
+      "value": "Input id card number or name error"
+    },
+    {
+      "name": "success",
+      "value": "add success"
+    },
+    {
+      "name": "tips",
+      "value": "If the project requires real-name ticket purchasing or real-name entry, please refer to the details page for specific requirements. Special reminder: For projects requiring real-name entry, attendees must present the valid ID used during ticket purchase to enter."
+    },
+    {
+      "name": "i_agree",
+      "value": "I have read and agree to the \"Real Name Notice.\""
+    },
+    {
+      "name": "add_new",
+      "value": "add new person"
+    },
+    {
+      "name": "check_real_name_notice",
+      "value": "Please check the real name notice"
+    }
+  ]
+}

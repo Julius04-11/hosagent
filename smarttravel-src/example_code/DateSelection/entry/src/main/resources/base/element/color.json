@@ -1,0 +1,32 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "price_font_color",
+      "value": "#E84026"
+    },
+    {
+      "name": "week_font_color",
+      "value": "#979797"
+    },
+    {
+      "name": "selected_background_color",
+      "value": "#0A59F7"
+    },
+    {
+      "name": "middle_background_color",
+      "value": "#F2F6FF"
+    },
+    {
+      "name": "date_font_color",
+      "value": "#333333"
+    }
+  ]
+}

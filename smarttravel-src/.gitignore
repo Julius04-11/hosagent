@@ -1,0 +1,48 @@
+# Dependencies
+/node_modules
+/oh_modules
+
+# Build outputs
+**/build
+**/.preview
+*.hap
+*.app
+
+# IDE
+/.idea
+.vscode/
+*.swp
+*.swo
+*~
+
+# Hvigor
+/.hvigor
+/hvigor/wrapper
+
+# Local configuration
+/local.properties
+.cxx
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Clang
+/.clangd
+/.clang-format
+/.clang-tidy
+
+# Test
+**/.test
+/.appanalyzer
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

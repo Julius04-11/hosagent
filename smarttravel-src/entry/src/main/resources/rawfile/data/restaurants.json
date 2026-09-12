@@ -1,0 +1,72 @@
+[
+  {
+    "id": "restaurant_001",
+    "name": "深圳湾海鲜大排档",
+    "category": "seafood",
+    "rating": 4.8,
+    "reviewCount": 856,
+    "priceRange": "¥120/人",
+    "address": "南山区深圳湾",
+    "location": {
+      "lat": 22.5086,
+      "lng": 113.9344
+    },
+    "openHours": "10:00-22:00",
+    "phone": "0755-12345678",
+    "description": "新鲜海鲜，现点现做，环境优雅，适合聚餐",
+    "specialties": ["清蒸石斑鱼", "椒盐濑尿虾", "姜葱炒蟹"],
+    "tags": ["海鲜", "粤菜", "聚餐", "景观餐厅"],
+    "images": [
+      "seafood_restaurant_01.jpg",
+      "seafood_restaurant_02.jpg"
+    ],
+    "facilities": ["停车场", "包厢", "WiFi", "儿童座椅"],
+    "createdAt": 1700000000000
+  },
+  {
+    "id": "restaurant_002",
+    "name": "川味火锅城",
+    "category": "hotpot",
+    "rating": 4.6,
+    "reviewCount": 1024,
+    "priceRange": "¥150/人",
+    "address": "福田区华强北",
+    "location": {
+      "lat": 22.5432,
+      "lng": 114.0879
+    },
+    "openHours": "11:00-23:00",
+    "phone": "0755-23456789",
+    "description": "正宗四川火锅，麻辣鲜香",
+    "specialties": ["九宫格火锅", "毛肚", "鹅肠"],
+    "tags": ["火锅", "川菜", "麻辣"],
+    "images": [
+      "hotpot_restaurant_01.jpg"
+    ],
+    "facilities": ["停车场", "WiFi"],
+    "createdAt": 1700100000000
+  },
+  {
+    "id": "restaurant_003",
+    "name": "粤式茶餐厅",
+    "category": "cantonese",
+    "rating": 4.7,
+    "reviewCount": 632,
+    "priceRange": "¥80/人",
+    "address": "罗湖区东门",
+    "location": {
+      "lat": 22.5478,
+      "lng": 114.1189
+    },
+    "openHours": "07:00-21:00",
+    "phone": "0755-34567890",
+    "description": "传统粤式点心，早茶首选",
+    "specialties": ["虾饺", "烧卖", "叉烧包"],
+    "tags": ["粤菜", "早茶", "点心"],
+    "images": [
+      "cantonese_restaurant_01.jpg"
+    ],
+    "facilities": ["WiFi", "外卖"],
+    "createdAt": 1700200000000
+  }
+]

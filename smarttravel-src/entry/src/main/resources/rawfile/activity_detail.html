@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>活动详情</title>
+    <style>
+        /* （CSS 样式保持不变或根据新需求微调，确保整体布局和组件样式一致） */
+        /* 基础样式和字体 */
+        body {
+            margin: 0;
+            font-family: "HarmonyOS Sans SC", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+            background: #f8f8f8; /* 轻微的背景色 */
+            color: #333;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 确保内容撑开整个视口高度 */
+            overflow-x: hidden; /* 禁止横向滚动 */
+        }
+
+        /* 顶部导航栏 */
+        .top-navbar {
+            position: fixed; /* 固定在顶部 */
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: calc(12px + env(safe-area-inset-top)) 16px 12px; /* 适配安全区 */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)); /* 渐变蒙层，确保轮播图可见 */
+            z-index: 1000; /* 确保在最顶层 */
+            transition: background 0.3s ease; /* 背景色变化平滑过渡 */
+        }
+
+        /* 滚动时顶部导航栏的背景变化 */
+        .top-navbar.scrolled {
+            background: #fff; /* 滚动后变为白色背景 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-button {
+            background: rgba(0, 0, 0, 0.4); /* 按钮背景，半透明 */
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            -webkit-backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+        }
+
+        .nav-button img {
+            width: 20px;
+            height: 20px;
+            filter: invert(1); /* 白色图标 */
+        }
+
+        /* 滚动时按钮背景变化 */
+        .top-navbar.scrolled .nav-button {
+            background: rgba(240, 240, 240, 0.8);
+        }
+
+        .top-navbar.scrolled .nav-button img {
+            filter: none; /* 滚动后图标恢复原色（黑色） */
+        }
+
+
+        /* 轮播图区域 */
+        .carousel-container {
+            width: 100%;
+            height: 250px; /* 轮播图高度 */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-inner {
+            display: flex;
+            width: 100%; /* 宽度由 JS 动态设置 */
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            width: 100%; /* 宽度由 JS 动态设置 */
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #fff;
+        }
+
+        /* 内容区域 */
+        .content-wrapper {
+            flex-grow: 1;
+            padding: 0 16px; /* 左右内边距 */
+            padding-bottom: calc(80px + env(safe-area-inset-bottom)); /* 底部留出空间给固定按钮 */
+            z-index: 1; /* 确保在底部按钮之上 */
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-top: 16px; /* 各section之间的间距 */
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 12px;
+            border-left: 4px solid #4CAF50; /* 左侧强调线 */
+            padding-left: 10px;
+        }
+
+        .section p, .section ul, .section ol, .section div { /* 确保所有内容元素都有基础样式 */
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .section ul, .section ol {
+            padding-left: 20px;
+        }
+
+        .section ul li, .section ol li {
+            margin-bottom: 5px;
+        }
+
+        .section strong {
+            color: #333;
+        }
+
+        /* 图片画廊样式 */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 80px; /* 固定高度，保持一致性 */
+            object-fit: cover; /* 裁剪图片以适应 */
+            border-radius: 8px;
+        }
+
+        /* 联系信息样式 */
+        .contact-info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-info-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .contact-info-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-info-list li span {
+            margin-right: 8px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .contact-info-list li a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .contact-info-list li a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* 底部固定按钮 */
+        .bottom-fixed-button {
+            position: fixed; /* 固定在底部 */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom)); /* 适配安全区 */
+            background: #fff;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+            z-index: 999; /* 确保在内容之上 */
+            text-align: center; /* 按钮的父容器居中 */
+        }
+
+        .enroll-button {
+            width: 100%;
+            max-width: 400px; /* 新增：设置最大宽度 */
+            margin: 0 auto; /* 新增：水平居中 */
+            display: block; /* 新增：将按钮变为块级元素以应用 margin: auto */
+            padding: 16px 0;
+            background: linear-gradient(to right, #4CAF50, #8BC34A); /* 报名按钮渐变色 */
+            color: white;
+            text-align: center;
+            border-radius: 28px; /* 大圆角 */
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .enroll-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        /* 媒体查询：平板及折叠屏 */
+        @media (min-width: 600px) {
+            .top-navbar {
+                padding: calc(16px + env(safe-area-inset-top)) 24px 16px;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-button img {
+                width: 24px;
+                height: 24px;
+            }
+
+            .carousel-container {
+                height: 350px; /* 平板上轮播图更高 */
+            }
+
+            .content-wrapper {
+                max-width: 800px; /* 限制内容宽度 */
+                margin: 0 auto; /* 居中显示 */
+                padding: 0 24px; /* 左右内边距 */
+                padding-bottom: calc(90px + env(safe-area-inset-bottom)); /* 底部留出更多空间 */
+            }
+
+            .section {
+                padding: 24px;
+                margin-top: 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .section p, .section ul, .section ol, .section div {
+                font-size: 16px;
+            }
+
+            .image-gallery img {
+                height: 100px; /* 平板上图片更高 */
+            }
+
+
+            .bottom-fixed-button {
+                padding: 20px;
+                padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            }
+
+            .enroll-button {
+                max-width: 500px; /* 平板及折叠屏下按钮最大宽度可以更宽一些 */
+                padding: 18px 0;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="carousel-container">
+    <div class="carousel-inner" id="carouselInner">
+    </div>
+    <div class="carousel-dots" id="carouselDots">
+    </div>
+</div>
+
+<div class="content-wrapper" id="contentWrapper">
+</div>
+
+<div class="bottom-fixed-button">
+    <button class="enroll-button" id="enrollButton" onclick="alert('即将跳转报名页面...')">立即报名</button>
+</div>
+
+<script>
+    // 模拟从后端获取的数据
+    // const activityData = {
+    //     "activityId": 1,
+    //     "title": "端午民俗嘉年华",
+    //     "carouselImages": [
+    //         "https://picsum.photos/id/1018/800/400",
+    //         "https://picsum.photos/id/1015/800/400",
+    //         "https://picsum.photos/id/1016/800/400"
+    //     ],
+    //     "sections": [
+    //         {
+    //             "type": "text",
+    //             "title": "🏞️ 景区介绍",
+    //             "content": "岳阳楼景区位于湖南省岳阳市，是江南三大名楼之一，也是国家AAAAA级旅游景区。它依长江而建，临洞庭而立，以其深厚的历史文化底蕴和壮丽的自然风光闻名遐迩。\n\n登上岳阳楼，可远眺八百里洞庭湖烟波浩渺，感受范仲淹《岳阳楼记》中“先天下之忧而忧，后天下之乐而乐”的豪情壮志。景区内不仅有古老的岳阳楼，还包括了三醉亭、仙梅亭、小乔墓等诸多历史遗迹，是集文化、历史、自然风光于一体的绝佳旅游目的地。"
+    //         },
+    //         {
+    //             "type": "rich_text_list",
+    //             "title": "🎉 活动详情",
+    //             "items": [
+    //                 {"label": "活动名称", "value": "端午民俗嘉年华"},
+    //                 {"label": "活动时间", "value": "2025年6月10日 - 2025年6月12日"},
+    //                 {"label": "活动地点", "value": "岳阳楼景区主广场及周边水域"},
+    //                 {"label": "活动内容", "value": [
+    //                         "**传统龙舟赛：** 邀请各地龙舟队齐聚洞庭湖，展开激烈角逐，感受传统节日的激情与活力。",
+    //                         "**包粽子大赛：** 游客可亲身体验包粽子乐趣，学习传统手艺，品尝自己亲手制作的美味粽子。",
+    //                         "**民俗表演：** 精彩的湖湘民俗歌舞、皮影戏、花鼓戏等轮番上演，展现地方文化魅力。",
+    //                         "**非遗市集：** 汇集当地非物质文化遗产手工艺品，如湘绣、纸扎、木雕等，可观赏、购买。",
+    //                         "**亲子互动区：** 设立儿童游乐设施和亲子游戏，让家庭共同享受节日欢乐。",
+    //                         "**夜间灯光秀：** 端午期间，岳阳楼及周边区域将上演流光溢彩的灯光秀，点亮洞庭之夜。",
+    //                         "**更多惊喜：** 现场还有神秘嘉宾互动和抽奖环节，不容错过！"
+    //                     ]}
+    //             ]
+    //         },
+    //         {
+    //             "type": "image_gallery",
+    //             "title": "📸 精彩瞬间",
+    //             "images": [
+    //                 "https://picsum.photos/id/1020/400/300",
+    //                 "https://picsum.photos/id/1021/400/300",
+    //                 "https://picsum.photos/id/1022/400/300",
+    //                 "https://picsum.photos/id/1023/400/300",
+    //                 "https://picsum.photos/id/1024/400/300"
+    //             ]
+    //         },
+    //         {
+    //             "type": "contact_info",
+    //             "title": "📞 联系方式",
+    //             "phone": "400-123-4567",
+    //             "email": "info@example.com",
+    //             "website": "https://www.example.com"
+    //         }
+    //     ],
+    //     "enrollmentAvailable": true, // 是否显示报名按钮
+    //     "enrollmentText": "立即报名", // 按钮文字
+    //     "enrollmentLink": "https://example.com/enroll/ACT001" // 报名链接
+    // };
+
+    let h5Port;
+    const activityData = new Proxy({
+        message: null
+    }, {
+        set(target, key, value) {
+            target[key] = value;
+            if (key === 'activityDetail') {
+                renderPage(activityData.activityDetail);
+            }
+            return true;
+        }
+    });
+
+    // --- 接收鸿蒙端数据的方法 ---
+    window.addEventListener('message', function (event) {
+        if (event.data === '__init_port__') {
+            if (event.ports[0] != null) {
+                h5Port = event.ports[0]; // 1. 保存从ets侧发送过来的端口
+                h5Port.onmessage = function (event) {
+                    // 2. 接收ets侧发送过来的消息.
+                    var msg = 'Got message from ets:';
+                    let result = event.data;
+                    if (typeof (result) == "string") {
+                        console.log("received string message from html5, string is:" + result);
+                        msg = result;
+                    } else if (typeof (result) == "object") {
+                        if (result instanceof ArrayBuffer) {
+                            console.log("received arraybuffer from html5, length is:" + result.byteLength);
+                            msg = msg + "length is " + result.byteLength;
+                        } else {
+                            console.log("not support");
+                        }
+                    } else {
+                        console.log("not support");
+                    }
+                    activityData.activityDetail = JSON.parse(msg);
+                }
+            }
+        }
+    })
+
+    function PostMsgToEts(data) {
+        if (h5Port) {
+            h5Port.postMessage(data);
+        } else {
+            console.error("h5Port is null, Please initialize first");
+        }
+    }
+
+    // --- 页面渲染函数 ---
+    function renderPage(data) {
+        // 渲染轮播图
+        renderCarousel(data.carouselImages);
+
+        // 渲染内容区域
+        renderContentSections(data.sections);
+
+        // 渲染底部报名按钮
+        renderEnrollmentButton(data.enrollmentAvailable, data.enrollmentText, data.enrollmentLink);
+
+        // 更新页面标题
+        document.title = data.title || '活动详情';
+    }
+
+    // --- 渲染轮播图 ---
+    const carouselInner = document.getElementById('carouselInner');
+    const carouselDots = document.getElementById('carouselDots');
+    let carouselInterval;
+    let currentIndex = 0;
+
+    function renderCarousel(images) {
+        if (!images || images.length === 0) {
+            document.querySelector('.carousel-container').style.display = 'none'; // 隐藏轮播图
+            return;
+        }
+
+        carouselInner.innerHTML = '';
+        carouselDots.innerHTML = '';
+        carouselInner.style.width = `${images.length * 100}%`; // 根据图片数量设置宽度
+
+        images.forEach((imgSrc, index) => {
+            const item = document.createElement('div');
+            item.className = 'carousel-item';
+            item.style.width = `${100 / images.length}%`; // 每个item占据总宽度的比例
+            item.style.backgroundImage = `url('${imgSrc}')`;
+            carouselInner.appendChild(item);
+
+            const dot = document.createElement('span');
+            dot.className = 'dot';
+            if (index === 0) dot.classList.add('active');
+            dot.dataset.index = index; // 存储索引
+            carouselDots.appendChild(dot);
+        });
+
+        // 绑定点击事件 (事件委托)
+        carouselDots.addEventListener('click', (event) => {
+            if (event.target.classList.contains('dot')) {
+                const dotIndex = parseInt(event.target.dataset.index);
+                currentIndex = dotIndex;
+                updateCarousel();
+                resetCarouselInterval(); // 用户手动切换后重置计时器
+            }
+        });
+
+        // 启动/重置自动播放
+        resetCarouselInterval();
+    }
+
+    function updateCarousel() {
+        const totalItems = document.querySelectorAll('.carousel-item').length;
+        if (totalItems === 0) return;
+        carouselInner.style.transform = `translateX(-${currentIndex * 100 / totalItems}%)`;
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function nextSlide() {
+        const totalItems = document.querySelectorAll('.carousel-item').length;
+        if (totalItems === 0) return;
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
+    }
+
+    function resetCarouselInterval() {
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(nextSlide, 3000);
+    }
+
+    // --- 渲染内容区域 ---
+    const contentWrapper = document.getElementById('contentWrapper');
+
+    function renderContentSections(sections) {
+        contentWrapper.innerHTML = ''; // 清空现有内容
+
+        sections.forEach(section => {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'section';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'section-title';
+            titleDiv.textContent = section.title;
+            sectionDiv.appendChild(titleDiv);
+
+            switch (section.type) {
+                case 'text':
+                    // 纯文本内容，处理换行符
+                    const paragraphs = section.content.split('\n').filter(p => p.trim() !== '');
+                    paragraphs.forEach(pText => {
+                        const p = document.createElement('p');
+                        // 使用 innerHTML 允许后端返回的粗体等简单格式
+                        p.innerHTML = pText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        sectionDiv.appendChild(p);
+                    });
+                    break;
+                case 'rich_text_list':
+                    section.items.forEach(item => {
+                        if (typeof item.value === 'string') {
+                            const p = document.createElement('p');
+                            p.innerHTML = `<strong>${item.label}：</strong>${item.value.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}`;
+                            sectionDiv.appendChild(p);
+                        } else if (Array.isArray(item.value)) {
+                            const pLabel = document.createElement('p');
+                            pLabel.innerHTML = `<strong>${item.label}：</strong>`;
+                            sectionDiv.appendChild(pLabel);
+                            const ul = document.createElement('ul');
+                            item.value.forEach(liText => {
+                                const li = document.createElement('li');
+                                li.innerHTML = liText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // 允许列表项内部有粗体
+                                ul.appendChild(li);
+                            });
+                            sectionDiv.appendChild(ul);
+                        }
+                    });
+                    break;
+                case 'image_gallery':
+                    const galleryDiv = document.createElement('div');
+                    galleryDiv.className = 'image-gallery';
+                    section.images.forEach(imgSrc => {
+                        const img = document.createElement('img');
+                        img.src = imgSrc;
+                        img.alt = section.title; // 图片 alt 属性
+                        galleryDiv.appendChild(img);
+                    });
+                    sectionDiv.appendChild(galleryDiv);
+                    break;
+                case 'contact_info':
+                    const contactList = document.createElement('ul');
+                    contactList.className = 'contact-info-list';
+                    if (section.phone) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span>电话：</span><a href="tel:${section.phone}">${section.phone}</a>`;
+                        contactList.appendChild(li);
+                    }
+                    if (section.email) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span>邮箱：</span><a href="mailto:${section.email}">${section.email}</a>`;
+                        contactList.appendChild(li);
+                    }
+                    if (section.website) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span>官网：</span><a href="${section.website}" target="_blank">${section.website.replace(/^(https?:\/\/)?(www\.)?/, '')}</a>`;
+                        contactList.appendChild(li);
+                    }
+                    sectionDiv.appendChild(contactList);
+                    break;
+                // 可以根据需要添加更多 case 来支持不同的内容类型
+                // 例如：'video', 'map', 'form' 等
+                default:
+                    console.warn('未知 Section 类型:', section.type);
+                    const defaultP = document.createElement('p');
+                    defaultP.textContent = '此部分内容格式暂不支持显示。';
+                    sectionDiv.appendChild(defaultP);
+            }
+            contentWrapper.appendChild(sectionDiv);
+        });
+    }
+
+    // --- 渲染底部报名按钮 ---
+    const enrollButton = document.getElementById('enrollButton');
+    const bottomFixedButton = document.querySelector('.bottom-fixed-button');
+
+    function renderEnrollmentButton(available, text, link) {
+        bottomFixedButton.style.display = 'block'; // 显示按钮容器
+        enrollButton.textContent = '立即报名';
+        enrollButton.onclick = () => {
+            const message = {
+                type: 'event',
+                content: 'signup'
+            }
+            PostMsgToEts(JSON.stringify(message));
+        };
+    }
+
+
+    // 顶部导航栏滚动变色逻辑
+    const topNavbar = document.getElementById('topNavbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) { // 滚动超过50px时改变样式
+            topNavbar.classList.add('scrolled');
+        } else {
+            topNavbar.classList.remove('scrolled');
+        }
+    });
+
+    // --- 页面加载完成时调用渲染函数 ---
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     renderPage(activityData); // 传入你的活动数据
+    // });
+
+    // 在实际应用中，你可能需要从 API 获取数据
+    // fetch('你的API地址')
+    //   .then(response => response.json())
+    //   .then(data => renderPage(data))
+    //   .catch(error => console.error('获取活动数据失败:', error));
+</script>
+
+</body>
+</html>

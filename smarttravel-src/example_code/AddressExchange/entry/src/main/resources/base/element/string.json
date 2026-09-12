@@ -1,0 +1,112 @@
+{
+  "string": [
+    {
+      "name": "address_exchange_content_size",
+      "value": "94%"
+    },
+    {
+      "name": "address_exchange_title",
+      "value": "地址交换动画"
+    },
+    {
+      "name": "address_exchange_detail",
+      "value": "点击中间图片，进行地址交换"
+    },
+    {
+      "name": "address_month",
+      "value": "月"
+    },
+    {
+      "name": "address_day",
+      "value": "日"
+    },
+    {
+      "name": "address_exchange_week",
+      "value": "周四"
+    },
+    {
+      "name": "address_exchange_search_ticket",
+      "value": "查询车票"
+    },
+    {
+      "name": "address_exchange_address_left",
+      "value": "北京"
+    },
+    {
+      "name": "address_exchange_address_right",
+      "value": "上海"
+    },
+    {
+      "name": "address_exchange_address_shenzhen",
+      "value": "深圳"
+    },
+    {
+      "name": "nanjing",
+      "value": "南京"
+    },
+    {
+      "name": "wlmq",
+      "value": "乌鲁木齐"
+    },
+    {
+      "name": "hangzhou",
+      "value": "杭州"
+    },
+    {
+      "name": "address_exchange_address_width",
+      "value": "40%"
+    },
+    {
+      "name": "address_exchange_image_width",
+      "value": "20%"
+    },
+    {
+      "name": "line",
+      "value": "常用路线"
+    },
+    {
+      "name": "split",
+      "value": "-"
+    },
+    {
+      "name": "start_date",
+      "value": "出发日期"
+    },
+    {
+      "name": "month",
+      "value": "月"
+    },
+    {
+      "name": "day",
+      "value": "日"
+    },
+    {
+      "name": "start_address",
+      "value": "出发地"
+    },
+    {
+      "name": "end_address",
+      "value": "目的地"
+    },
+    {
+      "name": "address_exchange_other_function",
+      "value": "仅演示，可自行实现业务功能"
+    },
+    {
+      "name": "ohos_id_color_sub_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "ohos_id_corner_radius_default_m",
+      "value": "12"
+    },
+    {
+      "name": "ohos_id_card_margin_start",
+      "value": "12"
+    },
+    {
+      "name": "ohos_id_text_size_headline",
+      "value": "20"
+    }
+  ]
+}

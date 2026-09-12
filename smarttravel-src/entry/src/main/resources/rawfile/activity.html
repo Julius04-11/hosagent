@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>精彩活动</title>
+  <style>
+    /* ... CSS 样式保持不变 ... */
+    body {
+        margin: 0;
+        font-family: "HarmonyOS Sans SC", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+        background: linear-gradient(to bottom right, #fdfbfb, #ebedee);
+        color: #333;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .header {
+        padding: calc(16px + env(safe-area-inset-top)) 16px 16px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .tabs {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 12px 16px;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab {
+        flex: none;
+        margin-right: 12px;
+        padding: 8px 18px;
+        border-radius: 24px;
+        background: #f0f2f5;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        font-size: 15px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .tab.active {
+        background: linear-gradient(to right, #4CAF50, #8BC34A);
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .content {
+        flex-grow: 1;
+        padding: 16px;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        font-size: 19px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #222;
+        line-height: 1.4;
+    }
+
+    .card-info {
+        font-size: 14px;
+        color: #777;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .card-info span {
+        margin-right: 12px;
+        white-space: nowrap;
+    }
+
+    .card-info span:last-child {
+        margin-right: 0;
+    }
+
+    @media (min-width: 600px) {
+        .tabs {
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .tab {
+            margin-right: 16px;
+            padding: 10px 24px;
+            font-size: 16px;
+        }
+
+        .content {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .card {
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 20px;
+        }
+
+        .card-info {
+            font-size: 15px;
+        }
+    }
+
+    @media (min-width: 900px) {
+        .content {
+            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">精彩活动</div>
+
+<div class="tabs" id="tabs-container">
+  <div class="tab active" data-key="hot">🔥 热门</div>
+  <div class="tab" data-key="new">🆕 最新</div>
+  <div class="tab" data-key="explore">🧭 探索</div>
+  <div class="tab" data-key="more">✨ 更多</div>
+</div>
+
+<div class="content" id="content">
+  <p style="text-align: center; color: #888; padding: 20px;">正在加载活动数据...</p>
+</div>
+
+<script type="text/javascript">
+  let h5Port;
+  const activitiesData = new Proxy({
+      message: null
+  }, {
+      set(target, key, value) {
+          target[key] = value;
+          if (key === 'activities') {
+              renderContent('hot')
+          }
+          return true;
+      }
+  });
+
+  function getData(data) {
+      activitiesData.activities = JSON.parse(data)
+      return data
+  }
+
+  // --- 接收鸿蒙端数据的方法 ---
+  window.addEventListener('message', function (event) {
+      if (event.data === '__init_port__') {
+          if (event.ports[0] != null) {
+              h5Port = event.ports[0]; // 1. 保存从ets侧发送过来的端口
+              h5Port.onmessage = function (event) {
+                  // 2. 接收ets侧发送过来的消息.
+                  var msg = 'Got message from ets:';
+                  let result = event.data;
+                  if (typeof (result) == "string") {
+                      console.log("received string message from html5, string is:" + result);
+                      msg = result;
+                  } else if (typeof (result) == "object") {
+                      if (result instanceof ArrayBuffer) {
+                          console.log("received arraybuffer from html5, length is:" + result.byteLength);
+                          msg = msg + "length is " + result.byteLength;
+                      } else {
+                          console.log("not support");
+                      }
+                  } else {
+                      console.log("not support");
+                  }
+                  activitiesData.activities = JSON.parse(msg);
+              }
+          }
+      }
+  })
+
+  function PostMsgToEts(data) {
+      if (h5Port) {
+          h5Port.postMessage(data);
+      } else {
+          console.error("h5Port is null, Please initialize first");
+      }
+  }
+
+  const contentDiv = document.getElementById('content');
+  const tabsContainer = document.getElementById('tabs-container'); // 获取 tab 父容器
+
+  // 使用事件委托处理 tab 点击
+  tabsContainer.addEventListener('click', function (event) {
+      const clickedTab = event.target.closest('.tab'); // 找到被点击的 tab 元素
+      if (clickedTab) {
+          // 移除所有 tab 的 active 类
+          document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+          // 为被点击的 tab 添加 active 类
+          clickedTab.classList.add('active');
+
+          const key = clickedTab.dataset.key; // 获取 data-key 属性
+          renderContent(key);
+      }
+  });
+
+  function renderContent(key) {
+      contentDiv.innerHTML = ''; // 清空当前内容
+      const items = activitiesData.activities[key];
+      if (items && items.length > 0) {
+          items.forEach(item => {
+              const card = document.createElement('div');
+              card.className = 'card';
+              card.id = item.activityId
+              card.innerHTML = `
+        <div class="card-title">${item.title}</div>
+        <div class="card-info">
+          <span>📅 ${item.time}</span>
+          <span>📍 ${item.location}</span>
+        </div>
+      `;
+              card.addEventListener('click', function (event) {
+                  const id = card.id
+                  console.error("当前点击的是" + id)
+                  const navigatorSign = {
+                      type: 'navigator',
+                      content: id
+                  }
+                  PostMsgToEts(JSON.stringify(navigatorSign))
+              });
+              contentDiv.appendChild(card);
+          });
+      } else {
+          contentDiv.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">暂无更多活动，敬请期待！</p>';
+      }
+  }
+
+</script>
+
+</body>
+</html>

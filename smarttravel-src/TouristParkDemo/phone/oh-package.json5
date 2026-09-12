@@ -1,0 +1,15 @@
+{
+  "name": "phone",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@ohos/common": "file:../common",
+    "@ohos/home": "file:../features/home",
+    "@ohos/parkService": "file:../features/ParkService",
+    "@ohos/mapService": "file:../features/MapService",
+    "@ohos/personalCenter": "file:../features/PersonalCenter"
+  }
+}

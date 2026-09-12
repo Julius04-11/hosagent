@@ -1,0 +1,98 @@
+{
+  "insightIntents": [
+    {
+      "intentName": "ViewTravelGuides",
+      "domain": "TravelDomain",
+      "intentVersion": "1.0.1",
+      "srcEntry": "./ets/entryability/InsightIntentExecutorImpl.ets",
+      "uiAbility": {
+        "ability": "EntryAbility",
+        "executeMode": [
+          "background",
+          "foreground"
+        ]
+      }
+    },
+    {
+      "intentName": "JumpFunctionPage",
+      "domain": "ToolsDomain",
+      "intentVersion": "1.0.1",
+      "srcEntry": "./ets/entryability/InsightIntentExecutorImpl.ets",
+      "uiAbility": {
+        "ability": "EntryAbility",
+        "executeMode": [
+          "foreground"
+        ]
+      },
+      "inputParams": [{
+        "properties": {
+          "pageId": {
+            "type": "string",
+            "enum": [
+              {
+                "value": "ViewGuides",
+                "displayName": "查看攻略",
+                "keywords": [
+                  "看攻略",
+                  "攻略",
+                  "浏览攻略",
+                  "查攻略"
+                ],
+                "displayDescription": "查看和浏览旅游攻略列表",
+                "icon": "https://example.com/icons/guides.png"
+              },
+              {
+                "value": "SearchDestinations",
+                "displayName": "搜索目的地",
+                "keywords": [
+                  "搜索",
+                  "找目的地",
+                  "查找地点",
+                  "搜地点"
+                ],
+                "displayDescription": "搜索旅游目的地和景点",
+                "icon": "https://example.com/icons/search.png"
+              },
+              {
+                "value": "MyTrips",
+                "displayName": "我的行程",
+                "keywords": [
+                  "行程",
+                  "我的旅行",
+                  "旅行计划",
+                  "行程单"
+                ],
+                "displayDescription": "查看和管理我的旅行行程",
+                "icon": "https://example.com/icons/trips.png"
+              },
+              {
+                "value": "FavoriteGuides",
+                "displayName": "攻略收藏",
+                "keywords": [
+                  "收藏",
+                  "我的收藏",
+                  "已收藏",
+                  "收藏夹"
+                ],
+                "displayDescription": "查看已收藏的旅游攻略",
+                "icon": "https://example.com/icons/favorite.png"
+              },
+              {
+                "value": "Settings",
+                "displayName": "设置",
+                "keywords": [
+                  "设置中心",
+                  "偏好设置",
+                  "配置",
+                  "系统设置"
+                ],
+                "displayDescription": "应用设置和偏好配置",
+                "icon": "https://example.com/icons/settings.png"
+              }
+            ]
+          }
+        }
+      }]
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "float": [
+    {
+      "name": "vp_twenty_eight",
+      "value": "28vp"
+    },
+    {
+      "name": "vp_fourteen",
+      "value": "14vp"
+    },
+    {
+      "name": "vp_three",
+      "value": "3vp"
+    },
+    {
+      "name": "margin_top_three",
+      "value": "3vp"
+    },
+    {
+      "name": "margin_top_ten",
+      "value": "10"
+    },
+    {
+      "name": "vp_twenty",
+      "value": "20vp"
+    },
+    {
+      "name": "vp_five",
+      "value": "5vp"
+    },
+    {
+      "name": "forty",
+      "value": "40"
+    },{
+      "name": "twenty",
+      "value": "20"
+    },
+    {
+      "name": "vp_ten",
+      "value": "10"
+    },
+    {
+      "name": "four_hundred",
+      "value": "400"
+    },
+    {
+      "name": "vp_sixteen",
+      "value": "16"
+    },
+    {
+      "name": "vp_twenty_two",
+      "value": "22"
+    },
+    {
+      "name": "seventeen",
+      "value": "17"
+    },
+    {
+      "name": "seven",
+      "value": "7"
+    },
+    {
+      "name": "vp_two",
+      "value": "2"
+    },
+    {
+      "name": "thirteen",
+      "value": "13"
+    },
+    {
+      "name": "vp_twenty_one",
+      "value": "21"
+    },
+    {
+      "name": "twelve",
+      "value": "12"
+    },
+    {
+      "name": "vp_minus_five",
+      "value": "-5"
+    },
+    {
+      "name": "vp_six",
+      "value": "6"
+    },
+    {
+      "name": "vp_seventy_two",
+      "value": "72"
+    },
+    {
+      "name": "eighty",
+      "value": "80"
+    },
+    {
+      "name": "vp_thirty_one",
+      "value": "31"
+    },
+    {
+      "name": "vp_twenty_seven",
+      "value": "27"
+    },
+    {
+      "name": "twenty_four",
+      "value": "24"
+    },
+    {
+      "name": "eighteen",
+      "value": "18"
+    },
+    {
+      "name": "two_hundred",
+      "value": "200"
+    },
+    {
+      "name": "fifty",
+      "value": "50"
+    },
+    {
+      "name": "vp_hundred",
+      "value": "100"
+    },
+    {
+      "name": "vp_four",
+      "value": "4"
+    },
+    {
+      "name": "vp_eight",
+      "value": "8"
+    },
+    {
+      "name": "border_width",
+      "value": "1"
+    },
+    {
+      "name": "vp_fifty_six",
+      "value": "56"
+    },
+    {
+      "name": "vp_fifteen",
+      "value": "15"
+    },
+    {
+      "name": "vp_forty",
+      "value": "40"
+    }
+  ]
+}

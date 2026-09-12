@@ -1,0 +1,68 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "mark_points",
+      "value": "标记点"
+    },
+    {
+      "name": "location",
+      "value": "地点"
+    },
+    {
+      "name": "trip_plan",
+      "value": "行程规划"
+    },
+    {
+      "name": "set_up",
+      "value": "设置"
+    },
+    {
+      "name": "home",
+      "value": "回家"
+    },
+    {
+      "name": "click_set_up",
+      "value": "点击设置"
+    },
+    {
+      "name": "company",
+      "value": "公司"
+    },
+    {
+      "name": "default_collection",
+      "value": "默认收藏"
+    },
+    {
+      "name": "add_address",
+      "value": "添加地点"
+    },
+    {
+      "name": "common_address",
+      "value": "常用地址"
+    },
+    {
+      "name": "click_view",
+      "value": "点击查看"
+    },
+    {
+      "name": "custom_dialog_content",
+      "value": "已添加至“默认收藏”'"
+    },
+    {
+      "name": "route",
+      "value": "路线"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "home",
+      "value": "首页"
+    },
+    {
+      "name": "mine",
+      "value": "我的"
+    },
+    {
+      "name": "permission_location_approximately_reason",
+      "value": "error"
+    },
+    {
+      "name": "permission_location_reason",
+      "value": "error"
+    }
+  ]
+}

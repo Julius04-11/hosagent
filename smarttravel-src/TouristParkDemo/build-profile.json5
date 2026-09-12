@@ -1,0 +1,58 @@
+{
+  "app": {
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.1(13)",
+        "runtimeOS": "HarmonyOS"
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug"
+      },
+      {
+        "name": "release"
+      }
+    ],
+  },
+  "modules": [
+    {
+      "name": "phone",
+      "srcPath": "./phone",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ParkService",
+      "srcPath": "./features/ParkService"
+    },
+    {
+      "name": "PersonalCenter",
+      "srcPath": "./features/PersonalCenter"
+    },
+    {
+      "name": "AccountCenter",
+      "srcPath": "./features/AccountCenter"
+    },
+    {
+      "name": "MapService",
+      "srcPath": "./features/MapService"
+    },
+    {
+      "name": "common",
+      "srcPath": "./common",
+    },
+    {
+      "name": "home",
+      "srcPath": "./features/home",
+    }
+  ]
+}

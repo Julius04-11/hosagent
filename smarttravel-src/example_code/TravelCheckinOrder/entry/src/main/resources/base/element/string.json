@@ -1,0 +1,84 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "order_list_title",
+      "value": "我的订单"
+    },
+    {
+      "name": "all_orders_tab_title",
+      "value": "全部"
+    },
+    {
+      "name": "paying_orders_tab_title",
+      "value": "待支付"
+    },
+    {
+      "name": "staying_orders_tab_title",
+      "value": "待入住"
+    },
+    {
+      "name": "commenting_orders_tab_title",
+      "value": "待评价"
+    },
+    {
+      "name": "more_oper_text",
+      "value": "更多"
+    },
+    {
+      "name": "no_order_tip",
+      "value": "您还没有相关订单"
+    },
+    {
+      "name": "delete_order_text",
+      "value": "删除订单"
+    },
+    {
+      "name": "close_order_text",
+      "value": "关闭订单"
+    },
+    {
+      "name": "request_refund_text",
+      "value": "申请退款"
+    },
+    {
+      "name": "rebook_order_text",
+      "value": "再次预订"
+    },
+    {
+      "name": "modify_order_text",
+      "value": "修改订单"
+    },
+    {
+      "name": "immediate_payment_text",
+      "value": "立即付款"
+    },
+    {
+      "name": "evaluate_immediately_text",
+      "value": "立即评价"
+    },
+    {
+      "name": "additional_evaluation_text",
+      "value": "追加评价"
+    },
+    {
+      "name": "wait_payment_text",
+      "value": "待支付：￥"
+    },
+    {
+      "name": "actual_payment_text",
+      "value": "实付款：￥"
+    }
+  ]
+}

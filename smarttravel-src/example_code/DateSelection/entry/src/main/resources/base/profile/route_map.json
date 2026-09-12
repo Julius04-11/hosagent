@@ -1,0 +1,12 @@
+{
+  "routerMap": [
+    {
+      "name": "calendarPage",
+      "pageSourceFile": "src/main/ets/pages/CalendarPage.ets",
+      "buildFunction": "calendarPageBuilder",
+      "data": {
+        "description": "this is calendarPage"
+      }
+    }
+  ]
+}

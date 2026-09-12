@@ -1,0 +1,27 @@
+# ---- 本地 Claude 配置（含本机路径/权限，勿上传）----
+.claude/
+
+# ---- HarmonyOS / DevEco 构建与缓存 ----
+.hvigor/
+.idea/
+build/
+oh_modules/
+.cxx/
+
+# ---- Node ----
+node_modules/
+dist/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# ---- 系统/编辑器 ----
+.DS_Store
+Thumbs.db
+*.log
+.vscode/

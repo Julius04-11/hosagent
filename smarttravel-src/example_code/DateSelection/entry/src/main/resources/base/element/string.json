@@ -1,0 +1,80 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "选择日期范围"
+    },
+    {
+      "name": "room_detail",
+      "value": "房间详情"
+    },
+    {
+      "name": "room_description",
+      "value": "豪华商务套房 2张大床"
+    },
+    {
+      "name": "room_description1",
+      "value": "豪华商务套房"
+    },
+    {
+      "name": "location",
+      "value": "位于市中心，配备舒适床铺和免费WiFi"
+    },
+    {
+      "name": "price",
+      "value": "¥1200"
+    },
+    {
+      "name": "room_name",
+      "value": "湖畔小筑"
+    },
+    {
+      "name": "check_in_data",
+      "value": "入住日期"
+    },
+    {
+      "name": "check_out_data",
+      "value": "退房日期"
+    },
+    {
+      "name": "check_in",
+      "value": "入住"
+    },
+    {
+      "name": "check_out",
+      "value": "离店"
+    },
+    {
+      "name": "confirm",
+      "value": "确认"
+    },
+    {
+      "name": "title",
+      "value": "入离店日期"
+    },
+    {
+      "name": "room",
+      "value": "房间"
+    },
+    {
+      "name": "facility",
+      "value": "设施"
+    },
+    {
+      "name": "mine",
+      "value": "我的"
+    },
+    {
+      "name": "line",
+      "value": "---"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "src": [
+    "pages/HomePage",
+    "pages/ConstraintPage",
+    "pages/PlanPage",
+    "pages/JourneyPage",
+    "pages/ReplanPage",
+    "pages/SettingsPage",
+    "pages/SummaryPage"
+  ]
+}

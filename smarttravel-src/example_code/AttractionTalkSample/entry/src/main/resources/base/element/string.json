@@ -1,0 +1,168 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "景点语音讲解"
+    },
+    {
+      "name": "self_guided",
+      "value": "自助导览"
+    },
+    {
+      "name": "introduction",
+      "value": "讲解"
+    },
+    {
+      "name": "ticket",
+      "value": "门票"
+    },
+    {
+      "name": "culture_creative",
+      "value": "文创"
+    },
+    {
+      "name": "catering",
+      "value": "餐饮"
+    },
+    {
+      "name": "home",
+      "value": "首页"
+    },
+    {
+      "name": "guide",
+      "value": "讲解"
+    },
+    {
+      "name": "collection",
+      "value": "藏品"
+    },
+    {
+      "name": "my",
+      "value": "我的"
+    },
+    {
+      "name": "ancient_chinese_architecture1",
+      "value": "中国古代建筑1"
+    },
+    {
+      "name": "ancient_chinese_architecture2",
+      "value": "中国古代建筑2"
+    },
+    {
+      "name": "ancient_chinese_architecture3",
+      "value": "中国古代建筑3"
+    },
+    {
+      "name": "ancient_chinese_architecture4",
+      "value": "中国古代建筑4"
+    },
+    {
+      "name": "ancient_chinese_architecture5",
+      "value": "中国古代建筑5"
+    },
+    {
+      "name": "ancient_chinese_architecture_description",
+      "value": "中国古代建筑是中国国家历史文物重要的组成部分，是我国历史文化重要的见证..."
+    },
+    {
+      "name": "ancient_chinese_architecture_exhibit",
+      "value": "常设展览北20-25展厅"
+    },
+    {
+      "name": "temple_of_heaven",
+      "value": "天坛"
+    },
+    {
+      "name": "bell_and_drum_tower",
+      "value": "钟鼓楼"
+    },
+    {
+      "name": "ming_tombs",
+      "value": "明十三陵"
+    },
+    {
+      "name": "white_horse_temple",
+      "value": "洛阳白马寺"
+    },
+    {
+      "name": "chongfu_temple",
+      "value": "朔州崇福寺"
+    },
+    {
+      "name": "suzhou_classical_gardens",
+      "value": "苏州园林"
+    },
+    {
+      "name": "summer_palace",
+      "value": "颐和园"
+    },
+    {
+      "name": "wang_family_courtyard",
+      "value": "王家大院"
+    },
+    {
+      "name": "terracotta_army",
+      "value": "秦兵马俑"
+    },
+    {
+      "name": "details_instruction",
+      "value": "天坛，位于北京市东城区，是明清两朝皇帝祭天、祈谷和祈雨的场所。天坛始建于明成祖永乐十八年，原名“天地坛”，明嘉靖九年在北京北郊另建祭祀地神的地坛，并改名为“天坛”。 天坛占地约273万平是故宫面积的四倍，是现存中国古代规模最大、伦理等级最高的祭祀建筑群。1961年，天坛被国务院公布为第一批全国重点文物保护单位之一。1998年，“北京皇家祭坛—天坛”被列为世界文化遗产，亦为2024年7月27日所入选的另一项世界遗产“北京中轴线——中国理想都城秩序的杰作”的一部分。现时天坛公园还包括九坛八庙中的祈谷坛"
+    },
+    {
+      "name": "play_count_default",
+      "value": "1157080"
+    },
+    {
+      "name": "all",
+      "value": "全部"
+    },
+    {
+      "name": "exhibition_recommendation",
+      "value": "展览推荐"
+    },
+    {
+      "name": "recent_exhibitions",
+      "value": "最近展览"
+    },
+    {
+      "name": "China_National_Ancient_Architecture",
+      "value": "中国国家古建筑"
+    },
+    {
+      "name": "exhibition_brief",
+      "value": "展    览    简    讯"
+    },
+    {
+      "name": "exhibition_date",
+      "value": "2025年6月28日"
+    },
+    {
+      "name": "Hui_style_Architecture",
+      "value": "徽派建筑"
+    },
+    {
+      "name": "European_Architectural_Styles",
+      "value": "欧洲建筑风格"
+    },
+    {
+      "name": "Audio_Guide",
+      "value": "语音讲解"
+    },
+    {
+      "name": "brief",
+      "value": "简介"
+    },
+    {
+      "name": "Exhibition",
+      "value": "陈列"
+    }
+  ]
+}

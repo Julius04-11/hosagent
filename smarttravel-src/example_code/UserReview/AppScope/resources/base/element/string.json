@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "UserReview"
+    },
+    {
+      "name": "agcit_huawei_multiShop_userreview",
+      "value": "1.0.0"
+    },
+    {
+      "name": "agcittype_huawei_multiShop_userreview",
+      "value": "sceneTemplate"
+    }
+  ]
+}

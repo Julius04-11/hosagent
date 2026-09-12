@@ -1,0 +1,60 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "租房"
+    },
+    {
+      "name": "tabbar_icon_Collection",
+      "value": "收藏"
+    },
+    {
+      "name": "tabbar_button_Contacts",
+      "value": "在线联系"
+    },
+    {
+      "name": "address_name",
+      "value": "XXX城"
+    },
+    {
+      "name": "commuting_text_placeholder",
+      "value": "添加上班地点,看通勤时间"
+    },
+    {
+      "name": "commuting_text_add",
+      "value": "添加通勤"
+    },
+    {
+      "name": "rental_title",
+      "value": "租住详情"
+    },
+    {
+      "name": "rental_detail_subtitle1",
+      "value": "随时入住"
+    },
+    {
+      "name": "rental_detail_content1",
+      "value": "租期1年-2年、1个月可随时看房"
+    },
+    {
+      "name": "rental_detail_subtitle2",
+      "value": "费用详情"
+    },
+    {
+      "name": "rental_detail_content2",
+      "value": "租金1200/月月付"
+    },
+    {
+      "name": "nearby_list_title",
+      "value": "附近地铁站"
+    }
+  ]
+}

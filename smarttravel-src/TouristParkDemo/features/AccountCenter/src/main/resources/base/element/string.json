@@ -1,0 +1,172 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "出行"
+    },
+    {
+      "name": "home",
+      "value": "Home"
+    },
+    {
+      "name": "mine",
+      "value": "Mine"
+    },
+    {
+      "name": "permission_location_approximately_reason",
+      "value": "申请模糊地理位置权限"
+    },
+    {
+      "name": "permission_location_reason",
+      "value": "申请精确地理位置权限"
+    },
+    {
+      "name": "start",
+      "value": "起点"
+    },
+    {
+      "name": "end",
+      "value": "终点"
+    },
+    {
+      "name": "dialog_text_title",
+      "value": "欢迎使用我的应用"
+    },
+    {
+      "name": "dialog_text_privacy_content",
+      "value": "我们充分尊重用户的隐私权，并按照法律要求和业界成熟的安全标准，为您的个人信息提供相应的安全保护措施。"
+    },
+    {
+      "name": "dialog_text_privacy_statement",
+      "value": "隐私协议保护声明"
+    },
+    {
+      "name": "dialog_text_declaration_prompt",
+      "value": "（以下简称为“本声明”）以便您了解我们如何搜集、使用、披露、保护、存储及传输您的个人数据。请您仔细阅读本声明。如您有任何疑问，请告知我们。"
+    },
+    {
+      "name": "dialog_button_disagree",
+      "value": "不同意"
+    },
+    {
+      "name": "dialog_button_agree",
+      "value": "同 意"
+    },
+    {
+      "name": "privacy_text_title",
+      "value": "隐私政策"
+    },
+    {
+      "name": "privacy_text_content",
+      "value": "本声明的重要组成部分，服务如何处理您的个人信息，您如何行使您的数据主体权利，相关的数据控制者以及如何联系该数据控制者等基本情况，由该隐私通知进行阐述。若隐私通知与本声明之间存在不一致，以该隐私通知为准，隐私通知中未约定的，以本声明为准。"
+    },
+    {
+      "name": "login_page",
+      "value": "登录界面"
+    },
+    {
+      "name": "register_page",
+      "value": "注册界面"
+    },
+    {
+      "name": "login_more",
+      "value": "登录帐号以使用更多服务"
+    },
+    {
+      "name": "account",
+      "value": "帐号"
+    },
+    {
+      "name": "password",
+      "value": "密码"
+    },
+    {
+      "name": "oldPassword",
+      "value": "旧密码"
+    },
+    {
+      "name": "newPassword",
+      "value": "新密码"
+    },
+    {
+      "name": "repeatNewPassword",
+      "value": "再次输入新密码"
+    },
+    {
+      "name": "phone_number",
+      "value": "手机号"
+    },
+    {
+      "name": "verify_code",
+      "value": "验证码"
+    },
+    {
+      "name": "login",
+      "value": "登录"
+    },
+    {
+      "name": "register",
+      "value": "注册"
+    },
+    {
+      "name": "register_account",
+      "value": "注册帐号"
+    },
+    {
+      "name": "forgot_password",
+      "value": "忘记密码"
+    },
+    {
+      "name": "update_password",
+      "value": "修改密码"
+    },
+    {
+      "name": "after_update_pwd",
+      "value": "重置密码后需重新登录"
+    },
+    {
+      "name": "message_login",
+      "value": "短信验证码登录"
+    },
+    {
+      "name": "verify_login",
+      "value": "账户密码登录"
+    },
+    {
+      "name": "change_one",
+      "value": "换一张"
+    },
+    {
+      "name": "verify_input_placeholder",
+      "value": "请输入验证码"
+    },
+    {
+      "name": "verify_wrong_hints",
+      "value": "验证码错误，请重新输入"
+    },
+    {
+      "name": "verify_hints",
+      "value": "为了保护你的网络安全，请输入验证码"
+    },
+    {
+      "name": "verify_ok",
+      "value": "确定"
+    },
+    {
+      "name": "success",
+      "value": "验证成功"
+    }
+  ]
+}

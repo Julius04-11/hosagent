@@ -1,0 +1,12 @@
+{
+  "routerMap": [
+    {
+      "name": "MapPage",
+      "pageSourceFile": "src/main/ets/components/MapPage.ets",
+      "buildFunction": "MapPageBuilder",
+      "data": {
+        "description": "this is MapPageBuilder"
+      }
+    }
+  ]
+}

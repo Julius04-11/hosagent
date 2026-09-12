@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "AddressExchange"
+    },
+    {
+      "name": "agcit_huawei_touristPark_AddressExchange",
+      "value": "1.0.0"
+    },
+    {
+      "name": "agcittype_huawei_touristPark_AddressExchange",
+      "value": "sceneTemplate"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "途变全域行程自适应 Agent"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "途变 - 真实动态出行助手"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "途变"
+    },
+    {
+      "name": "location_permission_reason",
+      "value": "用于判断你是否已经出发、是否接近换乘点或目的地，从而提供出发和重规划提醒。"
+    },
+    {
+      "name": "notification_permission_reason",
+      "value": "用于在出发、换乘、天气突变或计划失效时提醒你。"
+    }
+  ]
+}

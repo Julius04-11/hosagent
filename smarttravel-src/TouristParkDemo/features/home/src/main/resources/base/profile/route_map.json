@@ -1,0 +1,20 @@
+{
+  "routerMap": [
+    {
+      "name": "Notice",
+      "pageSourceFile": "src/main/ets/components/Notice.ets",
+      "buildFunction": "NoticeBuilder",
+      "data": {
+        "description": "this is NoticeBuilder"
+      }
+    },
+    {
+      "name": "Home",
+      "pageSourceFile": "src/main/ets/components/Home.ets",
+      "buildFunction": "HomeBuilder",
+      "data": {
+        "description": "this is HomeBuilder"
+      }
+    }
+  ]
+}

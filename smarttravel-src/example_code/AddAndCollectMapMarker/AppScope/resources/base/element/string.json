@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "AddAndCollectMapMarker"
+    },
+    {
+      "name": "agcit_huawei_touristPark_AddAndCollectMapMarker",
+      "value": "1.0.0"
+    },
+    {
+      "name": "agcittype_huawei_touristPark_AddAndCollectMapMarker",
+      "value": "sceneTemplate"
+    }
+  ]
+}

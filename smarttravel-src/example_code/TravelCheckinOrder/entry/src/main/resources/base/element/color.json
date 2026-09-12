@@ -1,0 +1,32 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "main_screen_background",
+      "value": "#F1F3F5"
+    },
+    {
+      "name": "normal_blue_color",
+      "value": "#0A59F7"
+    },
+    {
+      "name": "no_order_tip_font_color",
+      "value": "#777777"
+    },
+    {
+      "name": "order_time_span_font_color",
+      "value": "#66000000"
+    },
+    {
+      "name": "normal_other_button_background_color",
+      "value": "#0d000000"
+    },
+    {
+      "name": "normal_other_button_font_color",
+      "value": "#99000000"
+    }
+  ]
+}

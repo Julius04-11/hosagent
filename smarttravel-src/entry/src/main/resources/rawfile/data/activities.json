@@ -1,0 +1,40 @@
+{
+  "hot": [
+    { "activityId": 1, "title": "世界之窗国际文化节", "time": "2025-10-10", "location": "世界之窗", "category": "文化体验", "price": "¥180", "rating": 4.8 },
+    { "activityId": 2, "title": "欢乐谷万圣节狂欢夜", "time": "2025-10-15", "location": "欢乐谷", "category": "主题乐园", "price": "¥200", "rating": 4.7 },
+    { "activityId": 3, "title": "东部华侨城生态徒步", "time": "2025-10-18", "location": "东部华侨城", "category": "自然探索", "price": "¥150", "rating": 4.6 },
+    { "activityId": 4, "title": "大梅沙海滨音乐节", "time": "2025-10-22", "location": "大梅沙海滨公园", "category": "音乐节", "price": "¥120", "rating": 4.5 },
+    { "activityId": 5, "title": "莲花山公园风筝节", "time": "2025-10-28", "location": "莲花山公园", "category": "亲子活动", "price": "免费", "rating": 4.4 },
+    { "activityId": 6, "title": "深圳湾公园观鸟节", "time": "2025-10-05", "location": "深圳湾公园", "category": "自然观察", "price": "免费", "rating": 4.3 }
+  ],
+  "culture": [
+    { "activityId": 7, "title": "锦绣中华民俗村文化展", "time": "2025-10-05", "location": "锦绣中华民俗村", "category": "文化体验", "price": "¥160", "rating": 4.6 },
+    { "activityId": 8, "title": "深圳博物馆文物特展", "time": "2025-10-08", "location": "深圳博物馆", "category": "文化展览", "price": "免费", "rating": 4.7 },
+    { "activityId": 9, "title": "关山月美术馆艺术展", "time": "2025-10-07", "location": "关山月美术馆", "category": "艺术展览", "price": "¥30", "rating": 4.5 },
+    { "activityId": 10, "title": "大鹏所城古建筑探秘", "time": "2025-10-11", "location": "大鹏所城", "category": "历史文化", "price": "¥50", "rating": 4.4 }
+  ],
+  "nature": [
+    { "activityId": 11, "title": "梧桐山登山挑战赛", "time": "2025-10-20", "location": "梧桐山", "category": "户外运动", "price": "¥80", "rating": 4.8 },
+    { "activityId": 12, "title": "仙湖植物园科普游", "time": "2025-10-25", "location": "仙湖植物园", "category": "自然教育", "price": "¥20", "rating": 4.6 },
+    { "activityId": 13, "title": "红树林湿地观鸟", "time": "2025-10-19", "location": "红树林自然保护区", "category": "生态观察", "price": "免费", "rating": 4.5 },
+    { "activityId": 14, "title": "马峦山瀑布摄影", "time": "2025-10-23", "location": "马峦山郊野公园", "category": "摄影活动", "price": "免费", "rating": 4.4 }
+  ],
+  "entertainment": [
+    { "activityId": 15, "title": "深圳湾体育中心演唱会", "time": "2025-10-30", "location": "深圳湾体育中心", "category": "音乐演出", "price": "¥280", "rating": 4.7 },
+    { "activityId": 16, "title": "华强北电子市场探秘", "time": "2025-10-12", "location": "华强北商业区", "category": "科技体验", "price": "免费", "rating": 4.2 },
+    { "activityId": 17, "title": "东门老街美食节", "time": "2025-10-01", "location": "东门老街", "category": "美食体验", "price": "¥50", "rating": 4.3 },
+    { "activityId": 18, "title": "海上世界音乐喷泉秀", "time": "2025-10-08", "location": "海上世界", "category": "表演秀", "price": "免费", "rating": 4.1 }
+  ],
+  "sports": [
+    { "activityId": 19, "title": "深圳湾公园晨跑", "time": "2025-10-15", "location": "深圳湾公园", "category": "运动健身", "price": "免费", "rating": 4.5 },
+    { "activityId": 20, "title": "大运中心体育赛事", "time": "2025-10-20", "location": "深圳大运中心", "category": "体育赛事", "price": "¥100", "rating": 4.6 },
+    { "activityId": 21, "title": "西冲海滩冲浪体验", "time": "2025-10-25", "location": "西冲海滩", "category": "水上运动", "price": "¥200", "rating": 4.4 },
+    { "activityId": 22, "title": "笔架山公园瑜伽", "time": "2025-10-18", "location": "笔架山公园", "category": "瑜伽健身", "price": "¥60", "rating": 4.3 }
+  ],
+  "family": [
+    { "activityId": 23, "title": "深圳野生动物园亲子游", "time": "2025-10-12", "location": "深圳野生动物园", "category": "亲子活动", "price": "¥180", "rating": 4.6 },
+    { "activityId": 24, "title": "深圳科学馆科普体验", "time": "2025-10-15", "location": "深圳科学馆", "category": "科普教育", "price": "¥40", "rating": 4.5 },
+    { "activityId": 25, "title": "中心公园儿童乐园", "time": "2025-10-20", "location": "中心公园", "category": "儿童娱乐", "price": "免费", "rating": 4.2 },
+    { "activityId": 26, "title": "深圳图书馆亲子阅读", "time": "2025-10-22", "location": "深圳图书馆", "category": "文化活动", "price": "免费", "rating": 4.4 }
+  ]
+}

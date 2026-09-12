@@ -1,0 +1,29 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "mine_title_about",
+      "value": "关于"
+    },
+    {
+      "name": "update_password",
+      "value": "修改密码"
+    },
+    {
+      "name": "mine_title_quit",
+      "value": "退出登录"
+    },
+    {
+      "name": "account_name",
+      "value": "166****6555"
+    },
+    {
+      "name": "entry_sys",
+      "value": "登陆后解锁全部功能"
+    }
+
+  ]
+}

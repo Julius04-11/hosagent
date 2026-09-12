@@ -1,0 +1,48 @@
+{
+  "network-security-config": {
+    "base-config": {
+      "trust-anchors": [
+        {
+          "certificates": "/etc/security/certificates"
+        }
+      ],
+      "cleartextTrafficPermitted": true
+    },
+    "domain-config": [
+      {
+        "domains": [
+          {
+            "include-subdomains": true,
+            "name": "api.smarttravel.com"
+          }
+        ],
+        "trust-anchors": [
+          {
+            "certificates": "/etc/security/certificates"
+          }
+        ],
+        "cleartextTrafficPermitted": false
+      },
+      {
+        "domains": [
+          {
+            "include-subdomains": true,
+            "name": "cdn.smarttravel.com"
+          }
+        ],
+        "trust-anchors": [
+          {
+            "certificates": "/etc/security/certificates"
+          }
+        ],
+        "cleartextTrafficPermitted": false
+      }
+    ],
+    "component-config": {
+      "Network Kit": true,
+      "ArkWeb": false
+    }
+  },
+  "trust-global-user-ca": true,
+  "trust-current-user-ca": true
+}

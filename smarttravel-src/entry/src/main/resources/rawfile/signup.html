@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动报名</title>
+    <style>
+        /* 通用样式和重置 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* 页面内容靠顶部对齐 */
+            min-height: 100vh; /* 最小高度为视口高度 */
+            padding: 20px 0; /* 垂直方向的内边距 */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 90%; /* 默认宽度为90%视口宽度 */
+            max-width: 500px; /* 最大宽度 */
+            margin: 0 auto; /* 水平居中 */
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .activity-info {
+            background-color: #e0f2f7; /* 淡蓝色背景 */
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .activity-info h2 {
+            color: #0056b3;
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .activity-info p {
+            font-size: 1em;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+            -webkit-appearance: none; /* 移除iOS safari的默认样式 */
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px; /* 间隔 */
+            align-items: center;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+            transform: scale(1.2); /* 放大单选框 */
+            cursor: pointer;
+        }
+
+        .radio-group label {
+            margin-bottom: 0; /* 覆盖form-group label的margin-bottom */
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 25px;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .submit-button:active {
+            background-color: #004085;
+            transform: translateY(0);
+        }
+
+        /* 移动端适配：较小屏幕 */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 0;
+            }
+
+            .container {
+                width: 95%; /* 更小屏幕下宽度更大 */
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+                margin-bottom: 20px;
+            }
+
+            .activity-info {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+
+            .activity-info h2 {
+                font-size: 1.2em;
+            }
+
+            .activity-info p {
+                font-size: 0.9em;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                font-size: 0.9em;
+                margin-bottom: 5px;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="number"],
+            .form-group select {
+                padding: 10px;
+                font-size: 0.95em;
+            }
+
+            .submit-button {
+                padding: 12px;
+                font-size: 1em;
+                margin-top: 20px;
+            }
+        }
+
+        /* 媒体查询：横屏模式或平板设备 */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                width: 85%;
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .activity-info h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        /* 针对大屏幕的微调，虽然主要是移动端 */
+        @media (min-width: 769px) {
+            .container {
+                max-width: 600px; /* 稍微放大一点 */
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>活动报名</h1>
+
+    <div class="activity-info">
+        <h2>您正在报名：<span id="currentActivityName"></span></h2>
+    </div>
+
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="id">身份证号/证件号:</label>
+            <input type="text" id="id" name="id" placeholder="请输入身份证号或证件号" required>
+        </div>
+
+        <div class="form-group">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sex">性别:</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="sex" value="男" required>
+                <label for="male">男</label>
+                <input type="radio" id="female" name="sex" value="女">
+                <label for="female">女</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="age">年龄:</label>
+            <input type="number" id="age" name="age" placeholder="请输入您的年龄" min="1" max="120" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNo">手机号:</label>
+            <input type="tel" id="phoneNo" name="phoneNo" placeholder="请输入手机号（可选）" maxlength="11">
+        </div>
+
+        <input type="hidden" id="activity" name="activity" value="">
+        <input type="hidden" id="activityId" name="activityId" value="">
+
+        <button type="submit" class="submit-button">立即报名</button>
+    </form>
+</div>
+
+<script>
+    let h5Port;
+    const activityData = new Proxy({
+        activityName: null, // 将name改为activityName，避免与id等通用属性混淆
+        activityId: null
+    }, {
+        set(target, key, value) {
+            target[key] = value;
+            // 只有当 activityName 或 activityId 更新时，才渲染页面显示
+            if (key === 'activityName' || key === 'activityId') {
+                renderActivityInfo();
+            }
+            return true;
+        }
+    });
+
+    // --- 接收鸿蒙端数据的方法 ---
+    window.addEventListener('message', function (event) {
+        if (event.data === '__init_port__') {
+            if (event.ports[0] != null) {
+                h5Port = event.ports[0]; // 1. 保存从ets侧发送过来的端口
+                h5Port.onmessage = function (event) {
+                    // 2. 接收ets侧发送过来的消息.
+                    var msg = 'Got message from ets:';
+                    let result = event.data;
+                    if (typeof (result) == "string") {
+                        console.log("received string message from html5, string is:" + result);
+                        msg = result;
+                    } else if (typeof (result) == "object") {
+                        if (result instanceof ArrayBuffer) {
+                            console.log("received arraybuffer from html5, length is:" + result.byteLength);
+                            msg = msg + "length is " + result.byteLength;
+                        } else {
+                            console.log("not support");
+                        }
+                    } else {
+                        console.log("not support");
+                    }
+                    const message = JSON.parse(msg)
+                    activityData.activityName = message.activity; // 更新 activityName
+                    activityData.activityId = message.activityId; // 更新 activityId
+                }
+            }
+        }
+    });
+
+    function PostMsgToEts(data) {
+        if (h5Port) {
+            h5Port.postMessage(data);
+        } else {
+            console.error("h5Port is null, Please initialize first");
+        }
+    }
+
+    function renderActivityInfo() {
+        const currentActivityNameSpan = document.getElementById('currentActivityName');
+        const activityInput = document.getElementById('activity');
+        const activityIdInput = document.getElementById('activityId');
+
+        currentActivityNameSpan.textContent = activityData.activityName || '未知活动';
+        activityInput.value = activityData.activityName || '';
+        activityIdInput.value = activityData.activityId || '';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const registrationForm = document.getElementById('registrationForm');
+        // 初始渲染活动信息，如果 activityData 已经有值
+        renderActivityInfo();
+
+        registrationForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // 阻止表单默认提交行为
+
+            // 获取表单数据
+            const phoneNoValue = document.getElementById('phoneNo').value.trim();
+            const formData = {
+                id: document.getElementById('id').value.trim(),
+                name: document.getElementById('name').value.trim(),
+                // 确保性别有选中，如果未选中，querySelector可能返回null
+                sex: document.querySelector('input[name="sex"]:checked') ? document.querySelector('input[name="sex"]:checked').value : '',
+                age: parseInt(document.getElementById('age').value, 10),
+                activity: activityData.activityName, // 直接从 activityData 获取最新的活动名称
+                activityId: activityData.activityId // 直接从 activityData 获取最新的活动ID
+            };
+
+            // 只有当手机号不为空时才添加到formData中
+            if (phoneNoValue && phoneNoValue.length > 0) {
+                formData.phoneNo = phoneNoValue;
+            }
+
+            // 客户端验证
+            if (!formData.sex) {
+                alert('请选择性别！');
+                return;
+            }
+            if (isNaN(formData.age) || formData.age < 1 || formData.age > 120) {
+                alert('请输入有效的年龄（1-120岁）！');
+                return;
+            }
+            if (!formData.id) {
+                alert('请输入证件号！');
+                return;
+            }
+            if (!formData.name) {
+                alert('请输入姓名！');
+                return;
+            }
+            
+            // 验证身份证号（18位，基本格式检查）
+            if (formData.id.length !== 18) {
+                alert('身份证号必须是18位！');
+                return;
+            }
+            
+            // 验证手机号（如果提供了）
+            if (phoneNoValue && phoneNoValue.length > 0) {
+                const phoneRegex = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/;
+                if (!phoneRegex.test(phoneNoValue)) {
+                    alert('手机号格式不正确，请输入11位有效手机号！');
+                    return;
+                }
+            }
+            
+            if (!formData.activity || isNaN(formData.activityId)) {
+                alert('活动信息未正确加载，请刷新页面或联系管理员。');
+                return;
+            }
+
+            console.log('报名信息:', formData);
+
+            // 仅为演示目的，模拟成功提交
+            alert('报名信息已提交，请查看控制台！');
+            const formDataString = JSON.stringify(formData);
+            const message = {
+                type: 'event',
+                content: formDataString
+            }
+            PostMsgToEts(JSON.stringify(message));
+            registrationForm.reset(); // 清空表单
+            // 重置后重新填充预设的活动信息，确保隐藏字段和显示保持一致
+            renderActivityInfo();
+        });
+    });
+</script>
+</body>
+</html>

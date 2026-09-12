@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "DateSelection"
+    },
+    {
+      "name": "agcit_huawei_touristPark_DataSelection",
+      "value": "1.0.0"
+    },
+    {
+      "name": "agcittype_huawei_touristPark_DataSelection",
+      "value": "sceneTemplate"
+    }
+  ]
+}

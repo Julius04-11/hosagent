@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "LocationPermissionPrompt"
+    },
+    {
+      "name": "agcit_huawei_touristPark_LocationPermissionPrompt",
+      "value": "1.0.0"
+    },
+    {
+      "name": "agcittype_huawei_touristPark_LocationPermissionPrompt",
+      "value": "sceneTemplate"
+    }
+  ]
+}
