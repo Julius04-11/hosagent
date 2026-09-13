@@ -16,8 +16,8 @@ RUN_LIVE = os.getenv("RUN_LIVE_API_TESTS") == "1"
 
 
 @pytest.mark.skipif(not RUN_LIVE, reason="设置 RUN_LIVE_API_TESTS=1 后才调用真实天气 API")
-def test_open_meteo_live_weather():
-    os.environ["WEATHER_PROVIDER"] = "open_meteo"
+def test_open_meteo_live_weather(monkeypatch):
+    monkeypatch.setenv("WEATHER_PROVIDER", "open_meteo")
     weather = asyncio.run(get_weather("上海"))
     assert weather.city
     assert weather.temperature is not None
@@ -28,8 +28,8 @@ def test_open_meteo_live_weather():
     not RUN_LIVE or not os.getenv("AMAP_API_KEY"),
     reason="设置 RUN_LIVE_API_TESTS=1 且提供 AMAP_API_KEY 后才调用高德 API",
 )
-def test_amap_live_routes():
-    os.environ["MAP_PROVIDER"] = "amap"
+def test_amap_live_routes(monkeypatch):
+    monkeypatch.setenv("MAP_PROVIDER", "amap")
     goal = TravelGoal(origin="杭州东站", destination="西湖", deadline="20:00")
     routes = asyncio.run(get_candidate_routes(goal))
     assert routes

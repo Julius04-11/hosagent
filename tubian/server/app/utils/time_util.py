@@ -53,7 +53,8 @@ def parse_chinese_time(text: str) -> Optional[str]:
             period_offset = v
             break
 
-    m = re.search(r"([0-9一二两三四五六七八九十]+)点(半)?", text)
+    # 输入框粘贴或语音转写常把“7点”写为“7 点”，两种形式都应识别。
+    m = re.search(r"([0-9一二两三四五六七八九十]+)\s*点\s*(半)?", text)
     if m:
         digit = m.group(1)
         num = _cn_digit(digit)

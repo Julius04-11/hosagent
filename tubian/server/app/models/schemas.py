@@ -139,6 +139,8 @@ class ParseGoalRequest(CamelModel):
 class PlanRouteRequest(CamelModel):
     goal: TravelGoal
     location: Optional[LocationData] = None
+    # 调试页/调用方提供的模拟出发时间；未提供时才回退到目标中的出发时间或演示默认值。
+    now: Optional[str] = None
 
 
 class UpdateStatusRequest(CamelModel):

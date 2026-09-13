@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#071A2A" />
+    <title>途变 · 后端控制台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">TOUBIAN / BACKEND CONSOLE</p>
+          <h1>把一次出行，拆成可验证的信号。</h1>
+          <p class="lede">直接调用本机 FastAPI：目标解析、方案生成、状态更新与动态重规划。</p>
+        </div>
+        <div class="health" aria-label="服务状态">
+          <span class="pulse" aria-hidden="true"></span>
+          <span id="healthText">正在检查服务</span>
+        </div>
+      </header>
+
+      <section class="route-strip" aria-label="接口执行链路">
+        <span>01 解析目标</span><i></i><span>02 生成方案</span><i></i><span>03 更新状态</span><i></i><span>04 重规划</span>
+      </section>
+
+      <div class="workspace">
+        <section class="panel composer" aria-labelledby="composerTitle">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">REQUEST COMPOSER</p>
+              <h2 id="composerTitle">创建一段可测试的行程</h2>
+            </div>
+            <span class="chip" id="stageChip">等待输入</span>
+          </div>
+
+          <form id="journeyForm" novalidate>
+            <label for="goalText">一句话出行目标</label>
+            <textarea id="goalText" name="goalText" rows="6" aria-describedby="goalHint">我明天从杭州东站去上海看演唱会，带一个行李箱，预算 300 元，晚上 7 点前必须入场。</textarea>
+            <p class="hint" id="goalHint">先解析再生成路线。解析不完整时，会保留返回的缺失字段。</p>
+
+            <div class="field-grid">
+              <div>
+                <label for="nowTime">模拟出发时间</label>
+                <input id="nowTime" name="nowTime" type="time" value="16:30" aria-describedby="nowHint" />
+                <p class="sr-only" id="nowHint">会影响路线时间轴、预计到达时间及方案评分。</p>
+              </div>
+              <div>
+                <label for="scenario">重规划场景</label>
+                <input id="scenario" name="scenario" value="暴雨 + 长距离步行" readonly aria-describedby="scenarioHint" />
+                <p class="sr-only" id="scenarioHint">用于向重规划接口发送暴雨上下文。</p>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="primary" type="submit" id="planButton">解析并生成方案</button>
+              <button class="secondary" type="button" id="statusButton" disabled>验证当前状态</button>
+              <button class="danger" type="button" id="replanButton" disabled>模拟暴雨重规划</button>
+            </div>
+          </form>
+
+          <div class="request-notes" aria-label="接口说明">
+            <p><strong>真实数据：</strong>天气与高德路线由后端配置决定；页面不会接触服务端 API Key。</p>
+            <p><strong>操作提示：</strong>先完成“解析并生成方案”，再验证状态或触发重规划。</p>
+          </div>
+        </section>
+
+        <section class="panel observer" aria-labelledby="observerTitle">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">RESPONSE OBSERVER</p>
+              <h2 id="observerTitle">等待第一条响应</h2>
+            </div>
+            <span class="latency" id="latency">— ms</span>
+          </div>
+
+          <div id="statusMessage" class="status-message" role="status" aria-live="polite">服务启动后，先检查健康状态。</div>
+          <div id="summary" class="summary empty">
+            <p>还没有行程数据。提交左侧目标后，这里会显示方案摘要、风险与下一步行动。</p>
+          </div>
+
+          <details class="raw-response" open>
+            <summary>查看最后一次原始响应</summary>
+            <pre id="responseBody" tabindex="0">{ "等待接口响应": true }</pre>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
