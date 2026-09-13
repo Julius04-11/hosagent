@@ -14,6 +14,14 @@ def test_parse_demo_sentence():
     assert missing == []
 
 
+def test_parse_deadline_with_spaces_between_time_tokens():
+    # 对齐浏览器输入/语音转写常见的“晚上 7 点前”格式。
+    text = "我明天从杭州东站去上海看演唱会，带一个行李箱，预算 300 元，晚上 7 点前必须入场。"
+    goal, missing = parse_goal(text)
+    assert goal.deadline == "19:00"
+    assert "deadline" not in missing
+
+
 def test_parse_missing_fields():
     goal, missing = parse_goal("我明天从杭州出发")
     assert "origin" not in missing          # 出发地已识别
