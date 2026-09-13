@@ -1,6 +1,7 @@
 """途变 Agent 后端入口。"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import router
 
@@ -14,6 +15,9 @@ app.add_middleware(
 )
 
 app.include_router(router)
+
+# 独立后端调试页：与 API 同源部署，避免依赖鸿蒙客户端或额外前端工具链。
+app.mount("/", StaticFiles(directory="app/static", html=True), name="debug-console")
 
 
 if __name__ == "__main__":
