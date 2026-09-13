@@ -1,15 +1,26 @@
-"""地图路线服务。
+"""地图路线服务：高德 Web 服务 API + 稳定的本地 Mock 兜底。
 
-根据输入的起终点名生成「具体」候选路线（真实地点名，而非「出发地/目的地」占位）。
-
-- 内置「杭州 -> 上海」演示路线（高铁/地铁/网约车）；
-- 其他起终点按通用模板生成：地铁+步行 / 网约车 / 公交+步行；
-- 预留真实地图 API（高德 / 百度）注入点：接入后替换 get_candidate_routes
-  即可获得准确的距离与耗时（当前为估算值）。
+设置 ``AMAP_API_KEY`` 后自动启用高德地理编码、公交与驾车路径规划；未配置
+密钥或上游返回异常时保留原有候选路线，保证比赛演示和离线开发都可进行。
 """
-from typing import Any, Dict, List
+import asyncio
+import logging
+import math
+import os
+from typing import Any, Dict, List, Optional
 
+import httpx
+
+# Load server/.env once before reading provider configuration.
+import app.settings  # noqa: F401
 from app.models import TravelGoal
+
+logger = logging.getLogger(__name__)
+
+AMAP_GEOCODE_URL = "https://restapi.amap.com/v3/geocode/geo"
+AMAP_DRIVING_URL = "https://restapi.amap.com/v5/direction/driving"
+AMAP_TRANSIT_URL = "https://restapi.amap.com/v5/direction/transit/integrated"
+REQUEST_TIMEOUT_SECONDS = 10.0
 
 
 def _route(segments: List[Dict[str, Any]], walk: int, transfer: int) -> Dict[str, Any]:
@@ -17,33 +28,27 @@ def _route(segments: List[Dict[str, Any]], walk: int, transfer: int) -> Dict[str
 
 
 def _demo_hangzhou_shanghai(destination: str) -> List[Dict[str, Any]]:
-    """杭州 -> 上海（含高铁换乘）演示路线，末段目的地用用户实际输入。"""
+    """杭州 -> 上海演示路线，用于无 Key/网络异常的可靠降级。"""
     dest_near = f"{destination}附近"
     return [
         _route(
             segments=[
-                {"mode": "高铁", "from": "杭州东站", "to": "上海虹桥站",
-                 "duration_minutes": 55, "distance_meters": 165000, "cost": 110},
-                {"mode": "地铁", "from": "上海虹桥站", "to": dest_near,
-                 "duration_minutes": 38, "distance_meters": 12600, "cost": 6},
-                {"mode": "步行", "from": dest_near, "to": destination,
-                 "duration_minutes": 15, "distance_meters": 850, "cost": 0},
+                {"mode": "高铁", "from": "杭州东站", "to": "上海虹桥站", "duration_minutes": 55, "distance_meters": 165000, "cost": 110},
+                {"mode": "地铁", "from": "上海虹桥站", "to": dest_near, "duration_minutes": 38, "distance_meters": 12600, "cost": 6},
+                {"mode": "步行", "from": dest_near, "to": destination, "duration_minutes": 15, "distance_meters": 850, "cost": 0},
             ],
             walk=850, transfer=2,
         ),
         _route(
             segments=[
-                {"mode": "高铁", "from": "杭州东站", "to": "上海虹桥站",
-                 "duration_minutes": 55, "distance_meters": 165000, "cost": 110},
-                {"mode": "网约车", "from": "上海虹桥站", "to": f"{destination}室内入口",
-                 "duration_minutes": 25, "distance_meters": 9000, "cost": 55},
+                {"mode": "高铁", "from": "杭州东站", "to": "上海虹桥站", "duration_minutes": 55, "distance_meters": 165000, "cost": 110},
+                {"mode": "网约车", "from": "上海虹桥站", "to": f"{destination}室内入口", "duration_minutes": 25, "distance_meters": 9000, "cost": 55},
             ],
             walk=50, transfer=1,
         ),
         _route(
             segments=[
-                {"mode": "网约车", "from": "杭州东站", "to": destination,
-                 "duration_minutes": 150, "distance_meters": 175000, "cost": 420},
+                {"mode": "网约车", "from": "杭州东站", "to": destination, "duration_minutes": 150, "distance_meters": 175000, "cost": 420},
             ],
             walk=0, transfer=0,
         ),
@@ -51,44 +56,144 @@ def _demo_hangzhou_shanghai(destination: str) -> List[Dict[str, Any]]:
 
 
 def _build_generic_routes(origin: str, destination: str) -> List[Dict[str, Any]]:
-    """通用起终点 -> 三套具体候选路线（估算距离/耗时，接入真实地图 API 后替换）。"""
     return [
-        # 地铁 + 步行：便宜，步行较多
         _route(
             segments=[
-                {"mode": "地铁", "from": f"{origin}站", "to": f"{destination}附近",
-                 "duration_minutes": 40, "distance_meters": 12000, "cost": 6},
-                {"mode": "步行", "from": f"{destination}附近", "to": destination,
-                 "duration_minutes": 12, "distance_meters": 700, "cost": 0},
+                {"mode": "地铁", "from": f"{origin}站", "to": f"{destination}附近", "duration_minutes": 40, "distance_meters": 12000, "cost": 6},
+                {"mode": "步行", "from": f"{destination}附近", "to": destination, "duration_minutes": 12, "distance_meters": 700, "cost": 0},
             ],
             walk=700, transfer=1,
         ),
-        # 网约车：快、少步行、稍贵
         _route(
             segments=[
-                {"mode": "网约车", "from": origin, "to": destination,
-                 "duration_minutes": 30, "distance_meters": 15000, "cost": 45},
+                {"mode": "网约车", "from": origin, "to": destination, "duration_minutes": 30, "distance_meters": 15000, "cost": 45},
             ],
             walk=30, transfer=0,
         ),
-        # 公交 + 步行：最便宜、换乘/步行略多
         _route(
             segments=[
-                {"mode": "公交", "from": f"{origin}站", "to": f"{destination}站",
-                 "duration_minutes": 50, "distance_meters": 13000, "cost": 4},
-                {"mode": "步行", "from": f"{destination}站", "to": destination,
-                 "duration_minutes": 8, "distance_meters": 500, "cost": 0},
+                {"mode": "公交", "from": f"{origin}站", "to": f"{destination}站", "duration_minutes": 50, "distance_meters": 13000, "cost": 4},
+                {"mode": "步行", "from": f"{destination}站", "to": destination, "duration_minutes": 8, "distance_meters": 500, "cost": 0},
             ],
             walk=500, transfer=2,
         ),
     ]
 
 
-async def get_candidate_routes(goal: TravelGoal) -> List[Dict[str, Any]]:
-    """返回候选路线（尚未评分/组装成 RoutePlan）。"""
+def _fallback_routes(goal: TravelGoal) -> List[Dict[str, Any]]:
     origin = (goal.origin or "").strip() or "出发地"
     destination = (goal.destination or "").strip() or "目的地"
-
     if "杭州" in origin and "上海" in destination:
         return _demo_hangzhou_shanghai(destination)
     return _build_generic_routes(origin, destination)
+
+
+def _minutes(seconds: Any) -> int:
+    return max(1, math.ceil(float(seconds or 0) / 60))
+
+
+def _meters(value: Any) -> int:
+    return max(0, int(float(value or 0)))
+
+
+async def _geocode(client: httpx.AsyncClient, address: str, key: str) -> tuple[str, str]:
+    response = await client.get(AMAP_GEOCODE_URL, params={"address": address, "key": key})
+    response.raise_for_status()
+    payload = response.json()
+    if payload.get("status") != "1" or not payload.get("geocodes"):
+        raise ValueError(f"高德地理编码失败：{payload.get('info', 'unknown error')}")
+    geocode = payload["geocodes"][0]
+    city_code = str(geocode.get("citycode") or "")
+    if not city_code:
+        raise ValueError(f"高德地理编码未返回 citycode：{address}")
+    return str(geocode["location"]), city_code
+
+
+def _transit_candidate(payload: Dict[str, Any], origin: str, destination: str) -> Optional[Dict[str, Any]]:
+    route = payload.get("route") or {}
+    transits = route.get("transits") or route.get("paths") or []
+    if not transits:
+        return None
+    transit = transits[0]
+    segments = transit.get("segments") or []
+    all_text = str(segments)
+    mode = "地铁" if "地铁" in all_text or "metro" in all_text.lower() else "公交"
+    duration = _minutes(transit.get("duration"))
+    distance = _meters(transit.get("distance"))
+    walk = _meters(transit.get("walking_distance"))
+    cost = float(transit.get("transit_fee") or transit.get("cost") or 0)
+    transfer_count = max(0, len(segments) - 1)
+    return _route(
+        segments=[{
+            "mode": mode, "from": origin, "to": destination,
+            "duration_minutes": duration, "distance_meters": distance, "cost": cost,
+        }],
+        walk=walk,
+        transfer=transfer_count,
+    )
+
+
+def _driving_candidate(payload: Dict[str, Any], origin: str, destination: str) -> Optional[Dict[str, Any]]:
+    route = payload.get("route") or {}
+    paths = route.get("paths") or []
+    if not paths:
+        return None
+    path = paths[0]
+    return _route(
+        segments=[{
+            "mode": "网约车", "from": origin, "to": destination,
+            "duration_minutes": _minutes(path.get("duration")),
+            "distance_meters": _meters(path.get("distance")),
+            "cost": float(route.get("taxi_cost") or 0),
+        }],
+        walk=0,
+        transfer=0,
+    )
+
+
+async def _get_amap_routes(goal: TravelGoal, key: str) -> List[Dict[str, Any]]:
+    origin, destination = goal.origin.strip(), goal.destination.strip()
+    async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT_SECONDS) as client:
+        (origin_coord, origin_city), (destination_coord, destination_city) = await asyncio.gather(
+            _geocode(client, origin, key), _geocode(client, destination, key),
+        )
+        transit_params = {
+            "origin": origin_coord, "destination": destination_coord, "city1": origin_city,
+            "city2": destination_city, "strategy": 0, "show_fields": "cost", "key": key,
+        }
+        driving_params = {
+            "origin": origin_coord, "destination": destination_coord, "strategy": 32,
+            "show_fields": "cost", "key": key,
+        }
+        transit_resp, driving_resp = await asyncio.gather(
+            client.get(AMAP_TRANSIT_URL, params=transit_params),
+            client.get(AMAP_DRIVING_URL, params=driving_params),
+        )
+        transit_resp.raise_for_status()
+        driving_resp.raise_for_status()
+        transit_payload, driving_payload = transit_resp.json(), driving_resp.json()
+
+    candidates = []
+    transit = _transit_candidate(transit_payload, origin, destination)
+    driving = _driving_candidate(driving_payload, origin, destination)
+    if transit:
+        candidates.append(transit)
+    if driving:
+        candidates.append(driving)
+    if not candidates:
+        raise ValueError("高德路线规划未返回可用方案")
+    return candidates
+
+
+async def get_candidate_routes(goal: TravelGoal) -> List[Dict[str, Any]]:
+    """获取候选路线；高德不可用时按原始 Mock 规则降级。"""
+    key = os.getenv("AMAP_API_KEY", "").strip()
+    provider = os.getenv("MAP_PROVIDER", "auto").lower()
+    if provider == "mock" or not key:
+        return _fallback_routes(goal)
+
+    try:
+        return await _get_amap_routes(goal, key)
+    except (httpx.HTTPError, KeyError, TypeError, ValueError) as exc:
+        logger.warning("高德路径规划失败，已回退 Mock：%s", exc)
+        return _fallback_routes(goal)
