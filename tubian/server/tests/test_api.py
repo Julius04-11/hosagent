@@ -26,12 +26,13 @@ def test_full_flow():
     assert data["missingFields"] == []
 
     # 2. 路线规划
-    r = client.post("/api/plan-route", json={"goal": goal})
+    r = client.post("/api/plan-route", json={"goal": goal, "now": "16:30"})
     body = r.json()
     assert body["success"] is True
     main_plan = body["data"]["mainPlan"]
     backups = body["data"]["backupPlans"]
     assert main_plan["planId"]
+    assert main_plan["segments"][0]["startTime"] == "16:30"
     assert len(backups) >= 1
 
     # 3. 状态更新

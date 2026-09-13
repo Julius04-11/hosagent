@@ -61,7 +61,8 @@ async def api_parse_goal(req: ParseGoalRequest) -> ApiResponse:
 @router.post("/plan-route")
 async def api_plan_route(req: PlanRouteRequest) -> ApiResponse:
     goal = req.goal
-    context = await _context_with_weather(goal, now="16:30", location=req.location)
+    now = req.now or goal.departure_time or "16:30"
+    context = await _context_with_weather(goal, now=now, location=req.location)
     main_plan, all_plans = await build_route_plans(goal, context)
     backups = await generate_plan_b(goal, main_plan, context, all_plans[1:])
     tips = _build_risk_tips(goal, main_plan, context)

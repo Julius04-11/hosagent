@@ -96,6 +96,29 @@ def _meters(value: Any) -> int:
     return max(0, int(float(value or 0)))
 
 
+def _cost(value: Any) -> float:
+    """兼容高德 v5 在不同路线类型下返回标量或 cost 对象的费用字段。"""
+    if isinstance(value, dict):
+        for key in ("transit_fee", "taxi_fee", "taxi_cost", "price", "fee", "cost"):
+            if key in value and value[key] not in (None, ""):
+                return _cost(value[key])
+        return 0.0
+    try:
+        return float(value or 0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def _duration_minutes(route: Dict[str, Any]) -> int:
+    """高德 v5 的 duration 可能位于路线顶层或 show_fields 返回的 cost 对象内。"""
+    value = route.get("duration")
+    if isinstance(value, dict):
+        value = value.get("duration")
+    if value in (None, "") and isinstance(route.get("cost"), dict):
+        value = route["cost"].get("duration")
+    return _minutes(value)
+
+
 async def _geocode(client: httpx.AsyncClient, address: str, key: str) -> tuple[str, str]:
     response = await client.get(AMAP_GEOCODE_URL, params={"address": address, "key": key})
     response.raise_for_status()
@@ -118,10 +141,12 @@ def _transit_candidate(payload: Dict[str, Any], origin: str, destination: str) -
     segments = transit.get("segments") or []
     all_text = str(segments)
     mode = "地铁" if "地铁" in all_text or "metro" in all_text.lower() else "公交"
-    duration = _minutes(transit.get("duration"))
+    duration = _duration_minutes(transit)
     distance = _meters(transit.get("distance"))
     walk = _meters(transit.get("walking_distance"))
-    cost = float(transit.get("transit_fee") or transit.get("cost") or 0)
+    cost_data = transit.get("cost") or {}
+    nested_transit_fee = cost_data.get("transit_fee") if isinstance(cost_data, dict) else None
+    cost = _cost(transit.get("transit_fee") or nested_transit_fee or cost_data)
     transfer_count = max(0, len(segments) - 1)
     return _route(
         segments=[{
@@ -142,9 +167,9 @@ def _driving_candidate(payload: Dict[str, Any], origin: str, destination: str) -
     return _route(
         segments=[{
             "mode": "网约车", "from": origin, "to": destination,
-            "duration_minutes": _minutes(path.get("duration")),
+            "duration_minutes": _duration_minutes(path),
             "distance_meters": _meters(path.get("distance")),
-            "cost": float(route.get("taxi_cost") or 0),
+            "cost": _cost(route.get("taxi_cost") or route.get("cost") or path.get("cost")),
         }],
         walk=0,
         transfer=0,

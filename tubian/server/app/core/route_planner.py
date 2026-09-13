@@ -18,7 +18,8 @@ DEFAULT_DEPARTURE = "16:30"
 
 async def build_route_plans(goal: TravelGoal, context: JourneyContext) -> Tuple[RoutePlan, List[RoutePlan]]:
     candidates = await get_candidate_routes(goal)
-    departure = goal.departure_time or DEFAULT_DEPARTURE
+    # 明确填写的出发时间优先；否则使用调用方当前时间，避免调试/重规划时永远从 16:30 起算。
+    departure = goal.departure_time or context.now or DEFAULT_DEPARTURE
 
     plans: List[RoutePlan] = []
     for idx, cand in enumerate(candidates):

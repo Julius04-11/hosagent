@@ -59,7 +59,8 @@ function renderPlan(data) {
   ui.summary.innerHTML = `
     <h3>${escapeHtml(plan.type)} · ${escapeHtml(plan.eta)} 抵达</h3>
     <div class="metrics">
-      <div class="metric"><b>${escapeHtml(String(plan.cost))}</b><span>预计费用（元）</span></div>
+      <div class="metric"><b>${escapeHtml(plan.segments[0]?.startTime || '—')}</b><span>模拟出发</span></div>
+      <div class="metric"><b>${escapeHtml(String(plan.cost))}</b><span>当前路线费用（元）</span></div>
       <div class="metric"><b>${escapeHtml(String(plan.durationMinutes))}</b><span>预计耗时（分钟）</span></div>
       <div class="metric"><b>${escapeHtml(plan.riskLevel)}</b><span>准时风险</span></div>
     </div>
@@ -98,7 +99,7 @@ async function createPlan(event) {
       return;
     }
     state.goal = goal;
-    const planned = await request('/api/plan-route', { goal });
+    const planned = await request('/api/plan-route', { goal, now: ui.nowTime.value || '16:30' });
     state.mainPlan = planned.payload.data.mainPlan;
     showResponse('主方案与 Plan B', planned.payload, parsed.elapsed + planned.elapsed);
     renderPlan(planned.payload.data);

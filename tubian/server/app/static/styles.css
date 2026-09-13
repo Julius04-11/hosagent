@@ -78,7 +78,7 @@ input[readonly] { color: var(--muted); }
 .summary { min-height: 214px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; background: rgb(7 26 42 / 36%); }
 .summary.empty { display: grid; place-items: center; color: var(--muted); line-height: 1.65; text-align: center; }
 .summary h3 { margin: 0 0 13px; font: 700 22px/1.2 Georgia, "Noto Serif SC", serif; }
-.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 15px; }
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-bottom: 15px; }
 .metric { padding: 10px; border-radius: 10px; background: rgb(234 240 242 / 7%); }
 .metric b { display: block; color: var(--signal); font: 700 16px/1.1 "Cascadia Code", Consolas, monospace; }
 .metric span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }

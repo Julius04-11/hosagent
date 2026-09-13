@@ -42,8 +42,9 @@
 
             <div class="field-grid">
               <div>
-                <label for="nowTime">当前时间</label>
-                <input id="nowTime" name="nowTime" type="time" value="16:30" />
+                <label for="nowTime">模拟出发时间</label>
+                <input id="nowTime" name="nowTime" type="time" value="16:30" aria-describedby="nowHint" />
+                <p class="sr-only" id="nowHint">会影响路线时间轴、预计到达时间及方案评分。</p>
               </div>
               <div>
                 <label for="scenario">重规划场景</label>
