@@ -34,6 +34,7 @@ def test_full_flow():
     assert main_plan["planId"]
     assert main_plan["segments"][0]["startTime"] == "16:30"
     assert len(backups) >= 1
+    assert body["data"]["mapDebug"]["provider"] in {"amap", "mock"}
 
     # 3. 状态更新
     r = client.post("/api/update-status", json={

@@ -55,6 +55,14 @@ async function request(path, body) {
 function renderPlan(data) {
   const plan = data.mainPlan;
   const risks = data.riskTips?.length ? data.riskTips.map(item => `<li class="risk">${escapeHtml(item)}</li>`).join('') : '<li>当前未发现额外风险提示。</li>';
+  const legs = plan.segments.map((segment, index) => `
+    <li class="route-leg">
+      <div class="leg-time"><b>${escapeHtml(segment.startTime || '—')}</b><span>${escapeHtml(segment.endTime || '—')}</span></div>
+      <div class="leg-line" aria-hidden="true"><i>${index + 1}</i></div>
+      <div class="leg-detail"><strong>${escapeHtml(segment.mode)}</strong><p>${escapeHtml(segment.from)} <em>→</em> ${escapeHtml(segment.to)}</p><small>${escapeHtml(String(segment.durationMinutes))} 分钟 · ${formatDistance(segment.distanceMeters)} · ${formatCost(segment.cost)}</small>${segment.note ? `<span class="leg-note">${escapeHtml(segment.note)}</span>` : ''}</div>
+    </li>`).join('');
+  const source = data.mapDebug?.provider === 'amap' ? '高德实时路线' : (data.mapDebug?.label || '本地模拟路线');
+  const rawMap = data.mapDebug?.responses ? `<details class="map-response" open><summary>高德路线原始返回</summary><p>公交与驾车接口的未经业务改写响应。</p><pre tabindex="0">${escapeHtml(JSON.stringify(data.mapDebug.responses, null, 2))}</pre></details>` : `<p class="source-note">数据来源：${escapeHtml(source)}。未配置或高德不可用时会使用本地 Mock。</p>`;
   ui.summary.className = 'summary';
   ui.summary.innerHTML = `
     <h3>${escapeHtml(plan.type)} · ${escapeHtml(plan.eta)} 抵达</h3>
@@ -65,7 +73,19 @@ function renderPlan(data) {
       <div class="metric"><b>${escapeHtml(plan.riskLevel)}</b><span>准时风险</span></div>
     </div>
     <p>${escapeHtml(plan.reason)}</p>
-    <ul>${risks}</ul>`;
+    <p class="source-note">数据来源：${escapeHtml(source)}。换乘次数仅统计公共交通工具之间的切换。</p>
+    <ol class="route-trace" aria-label="行程分段与换乘说明">${legs}</ol>
+    <ul>${risks}</ul>
+    ${rawMap}`;
+}
+
+function formatDistance(distance) {
+  if (distance === null || distance === undefined) return '距离未知';
+  return distance >= 1000 ? `${(distance / 1000).toFixed(1)} 公里` : `${distance} 米`;
+}
+
+function formatCost(cost) {
+  return cost ? `约 ${cost} 元` : '费用未单列';
 }
 
 function renderStatus(data) {

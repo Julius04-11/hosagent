@@ -34,6 +34,7 @@ class RiskLevel(str, Enum):
 
 class SegmentMode(str, Enum):
     HIGH_SPEED_RAIL = "高铁"
+    TRAIN = "火车"
     SUBWAY = "地铁"
     BUS = "公交"
     WALK = "步行"
