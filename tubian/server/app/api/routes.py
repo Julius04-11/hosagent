@@ -63,7 +63,7 @@ async def api_plan_route(req: PlanRouteRequest) -> ApiResponse:
     goal = req.goal
     now = req.now or goal.departure_time or "16:30"
     context = await _context_with_weather(goal, now=now, location=req.location)
-    main_plan, all_plans = await build_route_plans(goal, context)
+    main_plan, all_plans, map_debug = await build_route_plans(goal, context, include_map_debug=True)
     backups = await generate_plan_b(goal, main_plan, context, all_plans[1:])
     tips = _build_risk_tips(goal, main_plan, context)
     return ApiResponse(
@@ -72,6 +72,7 @@ async def api_plan_route(req: PlanRouteRequest) -> ApiResponse:
             "mainPlan": _dump(main_plan),
             "backupPlans": [_dump(b) for b in backups],
             "riskTips": tips,
+            "mapDebug": map_debug,
         },
         message="",
     )

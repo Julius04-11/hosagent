@@ -16,6 +16,16 @@ app.add_middleware(
 
 app.include_router(router)
 
+
+@app.middleware("http")
+async def prevent_debug_console_cache(request, call_next):
+    """调试页随服务端一起迭代，避免浏览器继续执行旧版 app.js。"""
+    response = await call_next(request)
+    if request.url.path in {"/", "/index.html", "/app.js", "/styles.css"}:
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
+
 # 独立后端调试页：与 API 同源部署，避免依赖鸿蒙客户端或额外前端工具链。
 app.mount("/", StaticFiles(directory="app/static", html=True), name="debug-console")
 

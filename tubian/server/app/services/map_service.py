@@ -7,7 +7,7 @@ import asyncio
 import logging
 import math
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import httpx
 
@@ -119,6 +119,96 @@ def _duration_minutes(route: Dict[str, Any]) -> int:
     return _minutes(value)
 
 
+def _stop_name(stop: Any, fallback: str) -> str:
+    if isinstance(stop, dict):
+        return str(stop.get("name") or fallback)
+    return fallback
+
+
+def _route_segment(mode: str, start: str, end: str, duration: Any,
+                   distance: Any = None, cost: Any = None, note: Optional[str] = None) -> Dict[str, Any]:
+    return {
+        "mode": mode,
+        "from": start,
+        "to": end,
+        "duration_minutes": _minutes(duration),
+        "distance_meters": _meters(distance),
+        "cost": _cost(cost),
+        "note": note,
+    }
+
+
+def _rail_mode(railway: Dict[str, Any]) -> str:
+    """高德把普速、高铁等都放在 railway 中，不能一律标成地铁。"""
+    text = " ".join(str(railway.get(key) or "") for key in ("name", "trip", "type"))
+    return "高铁" if "高铁" in text or str(railway.get("trip") or "").upper().startswith(("G", "D", "C")) else "火车"
+
+
+def _expand_transit_segments(transit: Dict[str, Any], origin: str, destination: str) -> List[Dict[str, Any]]:
+    """将高德 transit 的原始 segments 展开为可读的换乘步骤。
+
+    高德会在一个 segment 内同时给出接驳出租车和铁路，也会把地铁、公交、步行
+    分散在不同 segment 中；保留每一段才能说明用户要如何换乘。
+    """
+    expanded: List[Dict[str, Any]] = []
+    current = origin
+    raw_segments = transit.get("segments") or []
+
+    for index, raw in enumerate(raw_segments):
+        if not isinstance(raw, dict):
+            continue
+
+        taxi = raw.get("taxi") or {}
+        if taxi:
+            end = str(taxi.get("endname") or "接驳点")
+            expanded.append(_route_segment(
+                "网约车", str(taxi.get("startname") or current), end,
+                taxi.get("drivetime") or taxi.get("duration"), taxi.get("distance"), taxi.get("price"),
+                "高德接驳出租车",
+            ))
+            current = end
+
+        railway = raw.get("railway") or {}
+        if railway:
+            start = _stop_name(railway.get("departure_stop"), current)
+            end = _stop_name(railway.get("arrival_stop"), destination)
+            label = str(railway.get("name") or railway.get("trip") or "铁路行程")
+            kind = str(railway.get("type") or "")
+            expanded.append(_route_segment(
+                _rail_mode(railway), start, end, railway.get("time") or railway.get("duration"),
+                railway.get("distance"), None, " · ".join(part for part in (label, kind) if part),
+            ))
+            current = end
+
+        bus = raw.get("bus") or {}
+        for line in bus.get("buslines") or []:
+            start = _stop_name(line.get("departure_stop"), current)
+            end = _stop_name(line.get("arrival_stop"), destination)
+            text = " ".join(str(line.get(key) or "") for key in ("name", "type"))
+            mode = "地铁" if "地铁" in text or "metro" in text.lower() else "公交"
+            via = line.get("via_num")
+            note = str(line.get("name") or mode)
+            if via not in (None, ""):
+                note = f"{note} · 经过 {via} 站"
+            expanded.append(_route_segment(
+                mode, start, end, _duration_minutes(line), line.get("distance"), line.get("cost"), note,
+            ))
+            current = end
+
+        walking = raw.get("walking") or {}
+        if walking:
+            # 高德步行段常没有站点名称；末段明确落到用户输入的目的地，其余保留为换乘步行。
+            is_last = not any(isinstance(next_raw, dict) and any(next_raw.values()) for next_raw in raw_segments[index + 1:])
+            end = destination if is_last else "下一换乘点"
+            expanded.append(_route_segment(
+                "步行", current, end, _duration_minutes(walking), walking.get("distance"), 0,
+                "步行接驳" if not is_last else "步行至目的地",
+            ))
+            current = end
+
+    return expanded
+
+
 async def _geocode(client: httpx.AsyncClient, address: str, key: str) -> tuple[str, str]:
     response = await client.get(AMAP_GEOCODE_URL, params={"address": address, "key": key})
     response.raise_for_status()
@@ -138,21 +228,26 @@ def _transit_candidate(payload: Dict[str, Any], origin: str, destination: str) -
     if not transits:
         return None
     transit = transits[0]
-    segments = transit.get("segments") or []
-    all_text = str(segments)
-    mode = "地铁" if "地铁" in all_text or "metro" in all_text.lower() else "公交"
-    duration = _duration_minutes(transit)
-    distance = _meters(transit.get("distance"))
+    segments = _expand_transit_segments(transit, origin, destination)
+    if not segments:
+        return None
     walk = _meters(transit.get("walking_distance"))
     cost_data = transit.get("cost") or {}
     nested_transit_fee = cost_data.get("transit_fee") if isinstance(cost_data, dict) else None
     cost = _cost(transit.get("transit_fee") or nested_transit_fee or cost_data)
-    transfer_count = max(0, len(segments) - 1)
+    # 票价常只在 transit 顶层出现。将未分摊部分记到首段公共交通，确保方案总价
+    # 与高德的 transit_fee 一致，同时页面能解释这笔费用来自公共交通行程。
+    segment_cost = sum(float(segment.get("cost") or 0) for segment in segments)
+    if cost > segment_cost:
+        public_segment = next((segment for segment in segments if segment["mode"] in {"高铁", "火车", "地铁", "公交"}), segments[0])
+        public_segment["cost"] = round(float(public_segment.get("cost") or 0) + cost - segment_cost, 1)
+        suffix = "含高德公共交通总票价"
+        public_segment["note"] = f"{public_segment.get('note')} · {suffix}" if public_segment.get("note") else suffix
+    # 换乘只计算公共交通工具之间的切换；步行/接驳车不会被误报为一次换乘。
+    public_modes = {"高铁", "火车", "地铁", "公交"}
+    transfer_count = max(0, sum(s["mode"] in public_modes for s in segments) - 1)
     return _route(
-        segments=[{
-            "mode": mode, "from": origin, "to": destination,
-            "duration_minutes": duration, "distance_meters": distance, "cost": cost,
-        }],
+        segments=segments,
         walk=walk,
         transfer=transfer_count,
     )
@@ -176,7 +271,7 @@ def _driving_candidate(payload: Dict[str, Any], origin: str, destination: str) -
     )
 
 
-async def _get_amap_routes(goal: TravelGoal, key: str) -> List[Dict[str, Any]]:
+async def _get_amap_routes(goal: TravelGoal, key: str) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     origin, destination = goal.origin.strip(), goal.destination.strip()
     async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT_SECONDS) as client:
         (origin_coord, origin_city), (destination_coord, destination_city) = await asyncio.gather(
@@ -207,18 +302,27 @@ async def _get_amap_routes(goal: TravelGoal, key: str) -> List[Dict[str, Any]]:
         candidates.append(driving)
     if not candidates:
         raise ValueError("高德路线规划未返回可用方案")
-    return candidates
+    return candidates, {
+        "provider": "amap",
+        "label": "高德 Web 服务路线响应",
+        "responses": {"transit": transit_payload, "driving": driving_payload},
+    }
 
 
-async def get_candidate_routes(goal: TravelGoal) -> List[Dict[str, Any]]:
-    """获取候选路线；高德不可用时按原始 Mock 规则降级。"""
+async def get_candidate_routes(goal: TravelGoal, include_debug: bool = False) -> Union[List[Dict[str, Any]], Tuple[List[Dict[str, Any]], Dict[str, Any]]]:
+    """获取候选路线；调试模式额外返回数据来源和高德原始响应。"""
     key = os.getenv("AMAP_API_KEY", "").strip()
     provider = os.getenv("MAP_PROVIDER", "auto").lower()
     if provider == "mock" or not key:
-        return _fallback_routes(goal)
+        routes = _fallback_routes(goal)
+        debug = {"provider": "mock", "label": "本地 Mock 路线", "responses": None}
+        return (routes, debug) if include_debug else routes
 
     try:
-        return await _get_amap_routes(goal, key)
+        routes, debug = await _get_amap_routes(goal, key)
+        return (routes, debug) if include_debug else routes
     except (httpx.HTTPError, KeyError, TypeError, ValueError) as exc:
         logger.warning("高德路径规划失败，已回退 Mock：%s", exc)
-        return _fallback_routes(goal)
+        routes = _fallback_routes(goal)
+        debug = {"provider": "mock", "label": "高德调用失败，已回退本地 Mock", "responses": None}
+        return (routes, debug) if include_debug else routes

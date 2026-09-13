@@ -2,7 +2,7 @@
 
 返回 (主方案, 全部方案[按分数降序])。主方案为评分最高者。
 """
-from typing import List, Tuple
+from typing import Any, List, Tuple, Union
 
 from app.core.explanation import build_reason
 from app.core.route_scorer import estimate_reliability, score_route
@@ -16,8 +16,13 @@ from app.utils.time_util import add_minutes, to_minutes
 DEFAULT_DEPARTURE = "16:30"
 
 
-async def build_route_plans(goal: TravelGoal, context: JourneyContext) -> Tuple[RoutePlan, List[RoutePlan]]:
-    candidates = await get_candidate_routes(goal)
+async def build_route_plans(goal: TravelGoal, context: JourneyContext,
+                            include_map_debug: bool = False) -> Union[Tuple[RoutePlan, List[RoutePlan]], Tuple[RoutePlan, List[RoutePlan], dict[str, Any]]]:
+    candidate_result = await get_candidate_routes(goal, include_debug=include_map_debug)
+    if include_map_debug:
+        candidates, map_debug = candidate_result
+    else:
+        candidates = candidate_result
     # 明确填写的出发时间优先；否则使用调用方当前时间，避免调试/重规划时永远从 16:30 起算。
     departure = goal.departure_time or context.now or DEFAULT_DEPARTURE
 
@@ -31,6 +36,8 @@ async def build_route_plans(goal: TravelGoal, context: JourneyContext) -> Tuple[
     scored.sort(key=lambda x: -x[0])
 
     ordered = [p for _, p in scored]
+    if include_map_debug:
+        return ordered[0], ordered, map_debug
     return ordered[0], ordered
 
 
@@ -52,6 +59,7 @@ def _assemble_plan(candidate: dict, idx: int, goal: TravelGoal, departure: str) 
             duration_minutes=dur,
             distance_meters=s.get("distance_meters"),
             cost=s.get("cost"),
+            note=s.get("note"),
         ))
         total_cost += float(s.get("cost") or 0)
         cursor = end

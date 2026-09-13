@@ -11,7 +11,9 @@ def test_debug_console_and_assets_are_served():
     page = client.get("/")
     assert page.status_code == 200
     assert "TOUBIAN / BACKEND CONSOLE" in page.text
+    assert page.headers["cache-control"] == "no-store"
 
     script = client.get("/app.js")
     assert script.status_code == 200
     assert "simulateRain" in script.text
+    assert script.headers["cache-control"] == "no-store"

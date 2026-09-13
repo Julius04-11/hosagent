@@ -60,7 +60,7 @@ components:
 
 ## Components
 
-静态调试页的 CSS 变量是本文件 token 的唯一运行时映射，定义于 `server/app/static/styles.css` 的 `:root`。表单使用原生控件和显式 label；异步操作共享按钮的 idle/busy/error/success 状态，以及右侧的 `aria-live` 反馈区。
+静态调试页的 CSS 变量是本文件 token 的唯一运行时映射，定义于 `server/app/static/styles.css` 的 `:root`。表单使用原生控件和显式 label；异步操作共享按钮的 idle/busy/error/success 状态，以及右侧的 `aria-live` 反馈区。路线方案使用编号时间线逐段呈现交通方式、上下车地点、耗时与换乘说明；高德原始响应以可展开的等宽数据区呈现，并明确标识真实数据或 Mock 回退来源。
 
 ## Do's and Don'ts
 
