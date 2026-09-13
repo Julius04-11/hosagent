@@ -20,6 +20,9 @@ __pycache__/
 .venv/
 venv/
 *.egg-info/
+.env
+.env.*
+!.env.example
 
 # ---- 系统/编辑器 ----
 .DS_Store

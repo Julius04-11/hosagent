@@ -43,12 +43,35 @@ pip install -r requirements.txt
 # 启动服务（默认 8000 端口）
 uvicorn app.main:app --reload
 
-# 跑测试（16 个用例）
+# 跑自动化测试
 python -m pytest -q
 
 # 跑端到端演示（无需启动服务，直接展示完整主链路）
 python demo.py
 ```
+
+### 真实数据配置
+
+后端已接入 Open-Meteo 的地点解析与实时天气，默认生效且网络异常会自动回退 Mock。
+地图路线使用高德 Web 服务 API；请在高德控制台创建 **Web 服务** 类型 Key，并仅通过
+本机环境变量配置，不能提交到仓库：
+
+完整的变量说明、Key 获取步骤与验证方式见 [`server/ENVIRONMENT.md`](server/ENVIRONMENT.md)。
+
+```powershell
+Copy-Item .env.example .env
+$env:AMAP_API_KEY = '你的高德 Web 服务 Key'
+$env:MAP_PROVIDER = 'amap'
+```
+
+执行真实 API 冒烟测试：
+
+```powershell
+$env:RUN_LIVE_API_TESTS = '1'
+python -m pytest -q
+```
+
+未配置高德 Key 时，地图服务继续使用既有 Mock；这是一种明确降级，而不是伪造实时路线。
 
 接口一览：
 
