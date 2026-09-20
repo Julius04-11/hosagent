@@ -11,9 +11,8 @@ from app.utils.time_util import to_minutes
 BAD_WEATHER = {"暴雨", "大雨", "台风", "暴雪", "雷暴"}
 
 
-def estimate_reliability(eta: str, deadline: str) -> Tuple[float, RiskLevel]:
-    """根据「截止时间 - 预计到达」的缓冲，估算准时概率与风险等级。"""
-    buffer = to_minutes(deadline) - to_minutes(eta)
+def estimate_reliability_from_buffer(buffer: int) -> Tuple[float, RiskLevel]:
+    """根据到达截止缓冲分钟数，估算准时概率与风险等级。"""
     if buffer >= 30:
         prob = 0.95
     elif buffer >= 15:
@@ -34,14 +33,28 @@ def estimate_reliability(eta: str, deadline: str) -> Tuple[float, RiskLevel]:
     return prob, risk
 
 
+def estimate_reliability(eta: str, deadline: str) -> Tuple[float, RiskLevel]:
+    """根据「截止时间 - 预计到达」的缓冲，估算准时概率与风险等级。"""
+    return estimate_reliability_from_buffer(to_minutes(deadline) - to_minutes(eta))
+
+
+def deadline_buffer(departure: str, deadline: str, duration_minutes: int) -> int:
+    """返回从 departure 出发后，抵达时距离 deadline 还剩多少分钟。"""
+    available = to_minutes(deadline) - to_minutes(departure)
+    if available < 0:
+        available += 24 * 60
+    return available - duration_minutes
+
+
 def score_route(plan: RoutePlan, goal: TravelGoal, context: JourneyContext) -> float:
     """对一条路线打分，返回越高越优。"""
     score = 100.0
+    departure = plan.segments[0].start_time if plan.segments else None
+    buffer = deadline_buffer(departure, goal.deadline, plan.duration_minutes) if departure else to_minutes(goal.deadline) - to_minutes(plan.eta)
     eta = to_minutes(plan.eta)
-    deadline = to_minutes(goal.deadline)
 
     # 超时
-    if eta > deadline:
+    if buffer < 0:
         score -= 50
 
     # 超预算
@@ -80,5 +93,31 @@ def score_route(plan: RoutePlan, goal: TravelGoal, context: JourneyContext) -> f
     hour = (eta // 60) % 24
     if (hour >= 22 or hour < 5) and plan.walk_distance_meters > 400:
         score -= 8
+
+    # —— 出行习惯画像权重 ——
+    profile = goal.travel_profile
+    if profile:
+        plan_modes = {s.mode.value for s in plan.segments}
+        # 晕车：公交方案大幅扣分，优先地铁/高铁
+        if profile.motion_sick and "公交" in plan_modes:
+            score -= 20
+        # 大件行李：步行距离长和换乘多都扣分
+        if profile.heavy_luggage:
+            if plan.walk_distance_meters > 400:
+                score -= 15
+            if plan.transfer_count >= 2:
+                score -= 10
+        # 带老人/小孩：步行多/换乘多/夜间扣分
+        if profile.with_elderly:
+            if plan.walk_distance_meters > 300:
+                score -= 12
+            if plan.transfer_count >= 2:
+                score -= 8
+        # 预算敏感：费用高扣分
+        if profile.budget_sensitive and plan.cost > 50:
+            score -= 10
+        # 时间敏感：耗时长扣分
+        if profile.time_sensitive and plan.duration_minutes > 60:
+            score -= 15
 
     return round(score, 2)
