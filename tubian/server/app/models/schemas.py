@@ -63,6 +63,14 @@ class Companion(CamelModel):
     count: int = 1
 
 
+class TravelProfile(CamelModel):
+    motion_sick: bool = False              # 晕车 -> motionSick
+    heavy_luggage: bool = False            # 大件行李 -> heavyLuggage
+    with_elderly: bool = False             # 带老人/小孩 -> withElderly
+    budget_sensitive: bool = False         # 预算敏感 -> budgetSensitive
+    time_sensitive: bool = False           # 时间敏感 -> timeSensitive
+
+
 class TravelGoal(CamelModel):
     origin: str
     destination: str
@@ -72,6 +80,9 @@ class TravelGoal(CamelModel):
     luggage: bool = False
     preference: TravelPreference = TravelPreference.ON_TIME
     companions: List[Companion] = []
+    accept_ride_hail: Optional[bool] = None  # -> acceptRideHail
+    transport_modes: List[str] = []        # 偏好交通方式 -> transportModes
+    travel_profile: Optional[TravelProfile] = None  # -> travelProfile
 
 
 class RouteSegment(CamelModel):
@@ -142,6 +153,16 @@ class PlanRouteRequest(CamelModel):
     location: Optional[LocationData] = None
     # 调试页/调用方提供的模拟出发时间；未提供时才回退到目标中的出发时间或演示默认值。
     now: Optional[str] = None
+
+
+class ReverseGeocodeRequest(CamelModel):
+    location: LocationData
+
+
+class ReverseGeocodeResult(CamelModel):
+    city: str
+    district: Optional[str] = None
+    formatted_address: Optional[str] = None
 
 
 class UpdateStatusRequest(CamelModel):

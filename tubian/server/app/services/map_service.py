@@ -1,7 +1,7 @@
-"""地图路线服务：高德 Web 服务 API + 稳定的本地 Mock 兜底。
+"""地图路线服务：高德 Web 服务 API。
 
-设置 ``AMAP_API_KEY`` 后自动启用高德地理编码、公交与驾车路径规划；未配置
-密钥或上游返回异常时保留原有候选路线，保证比赛演示和离线开发都可进行。
+运行时使用高德地理编码、公交与驾车路径规划；仅当 ``MAP_PROVIDER=mock``
+时使用本地测试数据。
 """
 import asyncio
 import logging
@@ -18,6 +18,7 @@ from app.models import TravelGoal
 logger = logging.getLogger(__name__)
 
 AMAP_GEOCODE_URL = "https://restapi.amap.com/v3/geocode/geo"
+AMAP_REGEOCODE_URL = "https://restapi.amap.com/v3/geocode/regeo"
 AMAP_DRIVING_URL = "https://restapi.amap.com/v5/direction/driving"
 AMAP_TRANSIT_URL = "https://restapi.amap.com/v5/direction/transit/integrated"
 REQUEST_TIMEOUT_SECONDS = 10.0
@@ -89,6 +90,8 @@ def _fallback_routes(goal: TravelGoal) -> List[Dict[str, Any]]:
 
 
 def _minutes(seconds: Any) -> int:
+    if isinstance(seconds, dict):
+        seconds = seconds.get("duration")
     return max(1, math.ceil(float(seconds or 0) / 60))
 
 
@@ -109,14 +112,25 @@ def _cost(value: Any) -> float:
         return 0.0
 
 
-def _duration_minutes(route: Dict[str, Any]) -> int:
-    """高德 v5 的 duration 可能位于路线顶层或 show_fields 返回的 cost 对象内。"""
+def _raw_seconds(route: Dict[str, Any]) -> Any:
+    """从高德 v5 dict 中提取原始时长（秒），不做分钟转换。
+
+    高德 v5 在 show_fields=cost 时，时长常嵌套在 cost.duration 中，
+    而非顶层 duration 字段；公交 busline 还可能用 time 字段。
+    """
     value = route.get("duration")
     if isinstance(value, dict):
         value = value.get("duration")
     if value in (None, "") and isinstance(route.get("cost"), dict):
         value = route["cost"].get("duration")
-    return _minutes(value)
+    if value in (None, ""):
+        value = route.get("time")
+    return value
+
+
+def _duration_minutes(route: Dict[str, Any]) -> int:
+    """高德 v5 的 duration 可能位于路线顶层或 show_fields 返回的 cost 对象内。"""
+    return _minutes(_raw_seconds(route))
 
 
 def _stop_name(stop: Any, fallback: str) -> str:
@@ -191,7 +205,7 @@ def _expand_transit_segments(transit: Dict[str, Any], origin: str, destination: 
             if via not in (None, ""):
                 note = f"{note} · 经过 {via} 站"
             expanded.append(_route_segment(
-                mode, start, end, _duration_minutes(line), line.get("distance"), line.get("cost"), note,
+                mode, start, end, _raw_seconds(line), line.get("distance"), line.get("cost"), note,
             ))
             current = end
 
@@ -201,7 +215,7 @@ def _expand_transit_segments(transit: Dict[str, Any], origin: str, destination: 
             is_last = not any(isinstance(next_raw, dict) and any(next_raw.values()) for next_raw in raw_segments[index + 1:])
             end = destination if is_last else "下一换乘点"
             expanded.append(_route_segment(
-                "步行", current, end, _duration_minutes(walking), walking.get("distance"), 0,
+                "步行", current, end, _raw_seconds(walking), walking.get("distance"), 0,
                 "步行接驳" if not is_last else "步行至目的地",
             ))
             current = end
@@ -210,6 +224,9 @@ def _expand_transit_segments(transit: Dict[str, Any], origin: str, destination: 
 
 
 async def _geocode(client: httpx.AsyncClient, address: str, key: str) -> tuple[str, str]:
+    address = (address or "").strip()
+    if not address:
+        raise ValueError("出发地或目的地为空，无法调用高德地理编码")
     response = await client.get(AMAP_GEOCODE_URL, params={"address": address, "key": key})
     response.raise_for_status()
     payload = response.json()
@@ -220,6 +237,55 @@ async def _geocode(client: httpx.AsyncClient, address: str, key: str) -> tuple[s
     if not city_code:
         raise ValueError(f"高德地理编码未返回 citycode：{address}")
     return str(geocode["location"]), city_code
+
+
+def _component_text(value: Any) -> str:
+    if isinstance(value, list):
+        return str(value[0] if value else "")
+    return str(value or "")
+
+
+async def reverse_geocode_location(location: Any) -> Dict[str, Optional[str]]:
+    """使用高德逆地理编码将鸿蒙定位坐标转换为城市/地址。"""
+    key = os.getenv("AMAP_API_KEY", "").strip()
+    if not key:
+        raise RuntimeError("未配置 AMAP_API_KEY，无法根据定位反查城市")
+
+    params = {
+        "location": f"{location.lng},{location.lat}",
+        "key": key,
+        "radius": 1000,
+        "extensions": "base",
+        "roadlevel": 0,
+    }
+    async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT_SECONDS) as client:
+        try:
+            response = await client.get(AMAP_REGEOCODE_URL, params=params)
+            response.raise_for_status()
+            payload = response.json()
+        except httpx.HTTPError as exc:
+            raise RuntimeError(f"高德逆地理编码网络请求失败：{exc}") from exc
+
+    if payload.get("status") != "1":
+        raise RuntimeError(f"高德逆地理编码失败：{payload.get('info', 'unknown error')}")
+
+    regeocode = payload.get("regeocode") or {}
+    component = regeocode.get("addressComponent") or {}
+    city = _component_text(component.get("city"))
+    province = _component_text(component.get("province"))
+    district = _component_text(component.get("district"))
+    if not city and province.endswith("市"):
+        city = province
+    if not city:
+        city = district or province
+    if not city:
+        raise RuntimeError("高德逆地理编码未返回城市信息")
+
+    return {
+        "city": city,
+        "district": district or None,
+        "formattedAddress": _component_text(regeocode.get("formatted_address")) or None,
+    }
 
 
 def _transit_candidate(payload: Dict[str, Any], origin: str, destination: str) -> Optional[Dict[str, Any]]:
@@ -309,20 +375,39 @@ async def _get_amap_routes(goal: TravelGoal, key: str) -> Tuple[List[Dict[str, A
     }
 
 
+def _filter_by_transport_modes(candidates: List[Dict[str, Any]], modes: List[str]) -> List[Dict[str, Any]]:
+    """按用户偏好交通方式过滤候选路线。
+
+    每条候选路线的 segments 包含 mode 字段（公交/地铁/高铁/网约车/步行/火车）。
+    若路线所有非步行段的 mode 都在用户选择内，则保留。
+    用户不选任何方式时不做过滤（= 不限）。
+    """
+    if not modes:
+        return candidates
+    mode_set = set(modes)
+    filtered = []
+    for cand in candidates:
+        non_walk_modes = {s["mode"] for s in cand["segments"] if s["mode"] != "步行"}
+        if not non_walk_modes or non_walk_modes.issubset(mode_set):
+            filtered.append(cand)
+    # 若过滤后为空（用户选的方式无可用路线），回退到全部候选，避免无方案可出
+    return filtered if filtered else candidates
+
+
 async def get_candidate_routes(goal: TravelGoal, include_debug: bool = False) -> Union[List[Dict[str, Any]], Tuple[List[Dict[str, Any]], Dict[str, Any]]]:
-    """获取候选路线；调试模式额外返回数据来源和高德原始响应。"""
+    """获取候选路线；生产联调模式不自动回退 Mock。"""
     key = os.getenv("AMAP_API_KEY", "").strip()
     provider = os.getenv("MAP_PROVIDER", "auto").lower()
-    if provider == "mock" or not key:
+    if provider == "mock":
         routes = _fallback_routes(goal)
         debug = {"provider": "mock", "label": "本地 Mock 路线", "responses": None}
         return (routes, debug) if include_debug else routes
+    if not key:
+        raise RuntimeError("未配置 AMAP_API_KEY，无法获取真实路线")
 
     try:
         routes, debug = await _get_amap_routes(goal, key)
+        routes = _filter_by_transport_modes(routes, goal.transport_modes)
         return (routes, debug) if include_debug else routes
     except (httpx.HTTPError, KeyError, TypeError, ValueError) as exc:
-        logger.warning("高德路径规划失败，已回退 Mock：%s", exc)
-        routes = _fallback_routes(goal)
-        debug = {"provider": "mock", "label": "高德调用失败，已回退本地 Mock", "responses": None}
-        return (routes, debug) if include_debug else routes
+        raise RuntimeError(f"高德路径规划失败：{exc}") from exc
