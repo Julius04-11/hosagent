@@ -19,6 +19,12 @@ from app.models.schemas import (
     ReverseGeocodeResult,
     UpdateStatusRequest,
     ReplanRequest,
+    TrainTicketAvailabilityRequest,
+    TrainTimetableRequest,
+    AgentToolInvokeRequest,
+    AgentDemoRequest,
+    AmapRouteQueryRequest,
+    AmapReverseGeocodeRequest,
 )
 
 __all__ = [
@@ -27,4 +33,7 @@ __all__ = [
     "WeatherData", "JourneyContext", "ReplanResult", "ApiResponse",
     "ParseGoalRequest", "PlanRouteRequest", "ReverseGeocodeRequest",
     "ReverseGeocodeResult", "UpdateStatusRequest", "ReplanRequest",
+    "TrainTicketAvailabilityRequest", "TrainTimetableRequest", "AgentToolInvokeRequest",
+    "AgentDemoRequest",
+    "AmapRouteQueryRequest", "AmapReverseGeocodeRequest",
 ]

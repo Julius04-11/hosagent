@@ -3,10 +3,12 @@
 使用 Pydantic v2；所有字段以 snake_case 命名（Python 侧），
 JSON 序列化统一为 camelCase（by_alias），对齐《开发文档》§6/§10。
 """
+from datetime import date
 from enum import Enum
+import re
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 def _to_camel(snake: str) -> str:
@@ -176,6 +178,82 @@ class ReplanRequest(CamelModel):
     goal: TravelGoal
     current_plan: RoutePlan                # -> currentPlan
     context: JourneyContext
+
+
+# ---- Agent Function Calling 工具参数 ----
+
+class TrainTicketAvailabilityRequest(CamelModel):
+    """按站到站与日期查询列车余票快照。"""
+
+    departure_station: str
+    arrival_station: str
+    query_date: date
+
+    @field_validator("departure_station", "arrival_station")
+    @classmethod
+    def validate_station(cls, value: str) -> str:
+        station = value.strip()
+        if not station:
+            raise ValueError("出发站和到达站不能为空")
+        return station
+
+
+class TrainTimetableRequest(CamelModel):
+    """查询余票工具返回的指定车次的经停站与到发时刻。"""
+
+    train_order: str
+    query_date: date
+
+    @field_validator("train_order")
+    @classmethod
+    def validate_train_order(cls, value: str) -> str:
+        train_order = value.strip()
+        if not re.fullmatch(r"[A-Za-z0-9]+", train_order):
+            raise ValueError("trainOrder 必须使用余票查询返回的车次唯一编号")
+        return train_order
+
+
+class AgentToolInvokeRequest(CamelModel):
+    """模型适配层执行工具时传入的参数。"""
+
+    arguments: dict[str, Any]
+
+
+class AgentDemoRequest(CamelModel):
+    """测试前端发起一次可审计的 Agent 工具编排。"""
+
+    text: str
+
+    @field_validator("text")
+    @classmethod
+    def validate_text(cls, value: str) -> str:
+        text = value.strip()
+        if not text:
+            raise ValueError("请输入出行目标")
+        return text
+
+
+class AmapRouteQueryRequest(CamelModel):
+    """供 Agent 直接查询高德候选路线。"""
+
+    origin: str
+    destination: str
+
+    @field_validator("origin", "destination")
+    @classmethod
+    def validate_address(cls, value: str) -> str:
+        address = value.strip()
+        if not address:
+            raise ValueError("出发地和目的地不能为空")
+        return address
+
+
+class AmapReverseGeocodeRequest(CamelModel):
+    """供 Agent 将用户授权的定位反查为地址。"""
+
+    lat: float
+    lng: float
+    accuracy: Optional[float] = None
 
 
 class ApiResponse(CamelModel):
