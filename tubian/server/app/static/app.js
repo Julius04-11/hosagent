@@ -6,6 +6,7 @@ const ui = {
   planButton: document.querySelector('#planButton'),
   statusButton: document.querySelector('#statusButton'),
   replanButton: document.querySelector('#replanButton'),
+  agentButton: document.querySelector('#agentButton'),
   healthText: document.querySelector('#healthText'),
   health: document.querySelector('.health'),
   stage: document.querySelector('#stageChip'),
@@ -14,6 +15,9 @@ const ui = {
   response: document.querySelector('#responseBody'),
   latency: document.querySelector('#latency'),
   title: document.querySelector('#observerTitle'),
+  traceTitle: document.querySelector('#agentTraceTitle'),
+  traceTotal: document.querySelector('#traceTotal'),
+  traceList: document.querySelector('#traceList'),
 };
 
 function setStage(text, style = '') {
@@ -99,6 +103,27 @@ function renderReplan(data) {
   ui.summary.innerHTML = `<h3>建议切换至 ${escapeHtml(plan.type)}</h3><div class="metrics"><div class="metric"><b>${escapeHtml(plan.eta)}</b><span>新预计抵达</span></div><div class="metric"><b>+${escapeHtml(String(data.extraCost))}</b><span>费用变化（元）</span></div><div class="metric"><b>${escapeHtml(data.riskLevel)}</b><span>新风险等级</span></div></div><p>${escapeHtml(data.explanation)}</p><ul><li class="risk">触发原因：${escapeHtml(data.trigger)}</li><li>${escapeHtml(data.action)}</li></ul>`;
 }
 
+function formatTraceValue(value) {
+  return `<pre>${escapeHtml(JSON.stringify(value, null, 2))}</pre>`;
+}
+
+function renderAgentTrace(data) {
+  const trace = data.trace || [];
+  ui.traceTitle.textContent = 'Agent 决策与工具轨迹';
+  ui.traceTotal.textContent = `${trace.length} 步`;
+  ui.traceList.innerHTML = trace.map(item => {
+    const isTool = item.kind === 'tool';
+    const statusText = item.status === 'success' ? '完成' : item.status === 'blocked' ? '待补充' : '失败';
+    const heading = isTool ? item.toolName : item.title;
+    const details = isTool
+      ? `<div class="trace-meta"><span>工具调用</span><span>${item.elapsedMs} ms</span></div><details><summary>查看入参和结果摘要</summary>${formatTraceValue({ arguments: item.arguments, result: item.result, error: item.error || undefined })}</details>`
+      : `<div class="trace-meta"><span>决策步骤</span></div>${item.result ? `<details><summary>查看结构化结果</summary>${formatTraceValue(item.result)}</details>` : ''}`;
+    return `<li class="trace-step ${item.status}"><div class="trace-step-number">${item.step}</div><div class="trace-content"><div class="trace-title-row"><h4>${escapeHtml(heading)}</h4><span class="trace-status">${statusText}</span></div><p>${escapeHtml(item.decision)}</p>${details}</div></li>`;
+  }).join('');
+  ui.summary.className = 'summary';
+  ui.summary.innerHTML = `<h3>Agent 汇总建议</h3><p>${escapeHtml(data.recommendation)}</p><ul><li>执行模式：${escapeHtml(data.agentMode)}</li></ul>`;
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 }
@@ -160,6 +185,29 @@ async function simulateRain() {
   finally { setBusy(ui.replanButton, false); }
 }
 
+async function runAgent() {
+  const text = ui.goalText.value.trim();
+  if (!text) { setMessage('请输入一句话出行目标后再运行 Agent。', 'error'); ui.goalText.focus(); return; }
+  setBusy(ui.agentButton, true, '正在调用工具…');
+  setStage('Agent 执行中', 'busy');
+  ui.traceTitle.textContent = '正在运行 Agent';
+  ui.traceTotal.textContent = '执行中';
+  ui.traceList.innerHTML = '<li class="trace-empty">正在解析目标并按需调用列车与高德工具…</li>';
+  try {
+    const result = await request('/api/agent/demo', { text });
+    showResponse('Agent 工具编排结果', result.payload, result.elapsed);
+    renderAgentTrace(result.payload.data);
+    setMessage('Agent 工具链已完成。可展开每一步检查真实入参、结果摘要和耗时。', 'success');
+    setStage('Agent 已完成', 'ready');
+  } catch (error) {
+    setMessage(`Agent 执行失败：${error.message}`, 'error');
+    setStage('Agent 失败', 'error');
+    ui.traceTitle.textContent = 'Agent 执行失败';
+    ui.traceTotal.textContent = '失败';
+    ui.traceList.innerHTML = `<li class="trace-empty error">${escapeHtml(error.message)}</li>`;
+  } finally { setBusy(ui.agentButton, false); }
+}
+
 async function checkHealth() {
   try {
     const response = await fetch('/api/health');
@@ -178,4 +226,5 @@ async function checkHealth() {
 ui.form.addEventListener('submit', createPlan);
 ui.statusButton.addEventListener('click', checkStatus);
 ui.replanButton.addEventListener('click', simulateRain);
+ui.agentButton.addEventListener('click', runAgent);
 checkHealth();
